@@ -2210,6 +2210,20 @@ void  ZTau3MuTaumu::doEvent(){
     
     
     PostSelection_BDT_Output.at(t).Fill(BDT_Evaluated);
+    
+    if(BDT_Evaluated>-0.3&&id==120){
+                  /*
+                  std::cout<<"------------------------------- "<< std::endl;
+                  std::cout<<"Event Content "<< std::endl;
+                  std::cout<<" idx1:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx2:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx3:  "<<Ntp->getMatchTruthIndex(Muon2LV) << std::endl;
+                  std::cout<<" idx OS taumu:  "<<Ntp->getMatchTruthIndex(MuLV) << std::endl;
+                  Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                  std::cout<< "\n\n\n\n\n\n";
+                  */
+    }
+    
     //PostSelection_BDT_Output_Without_Vis_Mass.at(t).Fill(BDT_Evaluated_Without_Vis_Mass);
     //Evaluate BDT with MC bkg
     PostSelection_BDT_Output_MC_Bkg.at(t).Fill(BDT_Evaluated_MC_Bkg);
@@ -2297,7 +2311,7 @@ void  ZTau3MuTaumu::doEvent(){
         }
         
         
-        if(BDT_Evaluated>0.335){
+        if(BDT_Evaluated>0.40){
         //if(BDT_Evaluated_Without_Vis_Mass>0.364379){
         
         PostBDT_TripletPt.at(t).Fill(var_TripletPT);
@@ -2347,7 +2361,7 @@ void  ZTau3MuTaumu::doEvent(){
       
         }
         
-        if(PlotMCOnly&&(var_4Mu_Chi2>2.0))  PostBDT_TripletMass.at(t).Fill(TauRefitLV.M(),1);
+        if(PlotMCOnly)  PostBDT_TripletMass.at(t).Fill(TauRefitLV.M(),1);
         }//if BDT value
   
   }

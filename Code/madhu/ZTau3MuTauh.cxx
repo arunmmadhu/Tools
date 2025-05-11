@@ -2272,12 +2272,13 @@ void  ZTau3MuTauh::doEvent(){
     // MC Event Classifier
     std::vector<unsigned int> MCMatched_to_signal_muons;
     
-    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon1LV));
-    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon2LV));
-    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon3LV));
+    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon1LV));
+    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon2LV));
+    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon3LV));
 
 
-    //EventClassifier EC(Ntp);
+    EventClassifier EC(Ntp);
+    
     //std::cout<<"  EventType  :      "<< EC.EventType(MCMatched_to_signal_muons)   << std::endl;
 
 
@@ -2654,6 +2655,20 @@ void  ZTau3MuTauh::doEvent(){
                 
                 PostSelection_A_BDT_Output.at(t).Fill(BDT_Evaluated_A);
                 
+                if(BDT_Evaluated_A>-0.3&&id==120){
+                  /*
+                  std::cout<<"------------------------------- "<< std::endl;
+                  std::cout<<"Event Content "<< std::endl;
+                  std::cout<<" idx1:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx2:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx3:  "<<Ntp->getMatchTruthIndex(Muon2LV) << std::endl;
+                  std::cout<<" idx OS tauhA:  "<<Ntp->getMatchTruthIndex(TauHLV) << std::endl;
+                  Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                  std::cout<< "\n\n\n\n\n\n";
+                  */
+                
+                }
+                
                 //Evaluate BDT with MC bkg
                 PostSelection_A_BDT_Output_MC_Bkg.at(t).Fill(BDT_Evaluated_MC_Bkg);
                 
@@ -2732,6 +2747,20 @@ void  ZTau3MuTauh::doEvent(){
                 //////////// kinematics 
                 
                 PostSelection_B_BDT_Output.at(t).Fill(BDT_Evaluated_B);
+                
+                if(BDT_Evaluated_B>-0.3&&id==120){
+                  /*
+                  std::cout<<"------------------------------- "<< std::endl;
+                  std::cout<<"Event Content "<< std::endl;
+                  std::cout<<" idx1:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx2:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx3:  "<<Ntp->getMatchTruthIndex(Muon2LV) << std::endl;
+                  std::cout<<" idx OS tauhB:  "<<Ntp->getMatchTruthIndex(TauHLV) << std::endl;
+                  Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                  std::cout<< "\n\n\n\n\n\n";
+                  */
+                
+                }
                 
                 //Evaluate BDT with MC bkg
                 PostSelection_B_BDT_Output_MC_Bkg.at(t).Fill(BDT_Evaluated_MC_Bkg);
@@ -2846,7 +2875,7 @@ void  ZTau3MuTauh::doEvent(){
         
         
         //if(BDT_Evaluated>0.309056){
-        if(BDT_Evaluated_A>0.345 && !Whether_HPS_Tau_Vtx_Exists){// Tauh,A category
+        if(BDT_Evaluated_A>0.22 && !Whether_HPS_Tau_Vtx_Exists){// Tauh,A category
         
         PostBDT_A_TripletPt.at(t).Fill(var_TripletPT);
         PostBDT_A_TripletEta.at(t).Fill(var_TripletEta);
@@ -2890,7 +2919,7 @@ void  ZTau3MuTauh::doEvent(){
         
         }//if BDT_Evaluated
         
-        if(BDT_Evaluated_B>0.18 && Whether_HPS_Tau_Vtx_Exists){// Tauh,B category
+        if(BDT_Evaluated_B>0.11 && Whether_HPS_Tau_Vtx_Exists){// Tauh,B category
         
         PostBDT_B_TripletPt.at(t).Fill(var_TripletPT);
         PostBDT_B_TripletEta.at(t).Fill(var_TripletEta);

@@ -175,6 +175,8 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   PostSelection_A_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostSelection_A_PairMass_OppositeSign_dR13;
   
+  std::vector<TH1D>   PostSelection_A_EventClassifier;
+  
   //Cat B
   std::vector<TH1D>   PostSelection_B_NumberOfTaus;
   std::vector<TH1D>   PostSelection_B_Tau3MuRelativeIsolation;

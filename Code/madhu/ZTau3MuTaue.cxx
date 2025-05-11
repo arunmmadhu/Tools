@@ -1792,6 +1792,20 @@ void  ZTau3MuTaue::doEvent(){
     if(PlotMCOnly)  PostSelection_TripletMass.at(t).Fill(TauRefitLV.M(),1);
     
     PostSelection_BDT_Output.at(t).Fill(BDT_Evaluated);
+    
+    if(BDT_Evaluated>-0.3&&id==120){
+                  /*
+                  std::cout<<"------------------------------- "<< std::endl;
+                  std::cout<<"Event Content "<< std::endl;
+                  std::cout<<" idx1:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx2:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+                  std::cout<<" idx3:  "<<Ntp->getMatchTruthIndex(Muon2LV) << std::endl;
+                  std::cout<<" idx OS taue:  "<<Ntp->getMatchTruthIndex(ElectronLV) << std::endl;
+                  Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                  std::cout<< "\n\n\n\n\n\n";
+                  */
+    }
+    
     PostSelection_BDT_Output_MC_Bkg.at(t).Fill(BDT_Evaluated_MC_Bkg);
     PostSelection_BDT_Output_Data_vs_MC_Bkg.at(t).Fill(BDT_Evaluated,BDT_Evaluated_MC_Bkg);
         
@@ -1867,7 +1881,7 @@ void  ZTau3MuTaue::doEvent(){
         }
         
         //if(BDT_Evaluated>0.333186){
-        if(BDT_Evaluated>0.175){
+        if(BDT_Evaluated>0.16){
         
         PostBDT_TripletPt.at(t).Fill(var_TripletPT);
         PostBDT_TripletEta.at(t).Fill(var_TripletEta);
