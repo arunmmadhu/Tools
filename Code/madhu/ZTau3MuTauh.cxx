@@ -2272,12 +2272,12 @@ void  ZTau3MuTauh::doEvent(){
     // MC Event Classifier
     std::vector<unsigned int> MCMatched_to_signal_muons;
     
-    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon1LV));
-    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon2LV));
-    MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon3LV));
+    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon1LV));
+    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon2LV));
+    //MCMatched_to_signal_muons.push_back(Ntp->getMatchTruthIndex(Muon3LV));
 
 
-    EventClassifier EC(Ntp);
+    //EventClassifier EC(Ntp);
     
     //std::cout<<"  EventType  :      "<< EC.EventType(MCMatched_to_signal_muons)   << std::endl;
 
@@ -2584,7 +2584,7 @@ void  ZTau3MuTauh::doEvent(){
         
         
         
-        
+        //std::cout<<" The event weight is: "<< Ntp->getMCEventWeight() << std::endl;
         
         
         //Post Selection Plots (except some HPS vtx variables), Cat A

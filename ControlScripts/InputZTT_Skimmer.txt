@@ -6,7 +6,7 @@ Analysis: ZTau3MuTaue_Skimmer
 Analysis: ZTau3MuTaumu_Skimmer
 UncertType: default
 SkimInfo: InputData/SkimSummary_ZTauTau.log
-Lumi: 58800
+Lumi: 59830
 PlotStyle: style2
 
 

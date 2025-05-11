@@ -2117,7 +2117,7 @@ void  ZTau3MuTaumu::doEvent(){
         
         
     
-    
+    //std::cout<<" The event weight is: "<< Ntp->getMCEventWeight() << std::endl;
     
     //Post Selection Plots
     
