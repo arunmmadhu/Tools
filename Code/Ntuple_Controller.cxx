@@ -167,9 +167,9 @@ void Ntuple_Controller::ConfigureObjects(){
 //Physics get Functions
 Long64_t  Ntuple_Controller::GetMCID(){
 
-   Long64_t  DataMCTypeFromTupel =  Ntp->Event_DataMC_Type;
+   Long64_t  DataMCTypeFromTuple =  Ntp->Event_DataMC_Type;
 
-   if(DataMCTypeFromTupel==210 || DataMCTypeFromTupel==210231 ||  DataMCTypeFromTupel==210232 ||  DataMCTypeFromTupel==210233 ){// reassign ZTT ID to prevent migration btw. subcategories
+   if(DataMCTypeFromTuple==210 || DataMCTypeFromTuple==210231 ||  DataMCTypeFromTuple==210232 ||  DataMCTypeFromTuple==210233 ){// reassign ZTT ID to prevent migration btw. subcategories
    
            int Whether_decay_found(0);
            int TausFromZ_Count(0);
@@ -227,13 +227,22 @@ Long64_t  Ntuple_Controller::GetMCID(){
                     }
            }
            
-           if(tau_3mu_idx>-0.5 && tau_h_idx>-0.5) DataMCTypeFromTupel=210233;
-           if(tau_3mu_idx>-0.5 && tau_mu_idx>-0.5) DataMCTypeFromTupel=210232;
-           if(tau_3mu_idx>-0.5 && tau_e_idx>-0.5) DataMCTypeFromTupel=210231;
+           if(tau_3mu_idx>-0.5 && tau_h_idx>-0.5) DataMCTypeFromTuple=210233;
+           if(tau_3mu_idx>-0.5 && tau_mu_idx>-0.5) DataMCTypeFromTuple=210232;
+           if(tau_3mu_idx>-0.5 && tau_e_idx>-0.5) DataMCTypeFromTuple=210231;
    
    }
-   return DataMCTypeFromTupel;
+   return DataMCTypeFromTuple;
 
+}
+
+// return the weights of redecayed events
+double Ntuple_Controller::getMCEventWeight(){
+        if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
+                //return 1.0/25000.0;
+                return Ntp->genWeight;
+        }
+        return 1.0;
 }
 
 // return DataMCType without mass information
