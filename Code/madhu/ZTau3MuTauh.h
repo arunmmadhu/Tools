@@ -40,8 +40,6 @@ class ZTau3MuTauh : public Selection {
 	     SignalCandidate,
 	     HLT_reinforcements,
 	     TriggerMatch,
-             TripletPT,
-             Tau3MuIsolation,
              nTaus_dR,
              nTaus_pT,
              nTaus_eta,
@@ -50,8 +48,6 @@ class ZTau3MuTauh : public Selection {
 	     DeepTauJets,
 	     DeepTauMuons,
 	     DeepTauElectrons,
-	     VisMass,
-	     ExclNewMode,
 	     NCuts}; 
 
  protected:
@@ -118,6 +114,8 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoMu_Eta;
   std::vector<TH1D>   Selection_Cut_RecoH_Pt;
   std::vector<TH1D>   Selection_Cut_RecoH_Eta;
+  
+  std::vector<TH1D>   Selection_TripletMass;
   
   //After Selection
   

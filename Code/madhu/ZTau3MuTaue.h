@@ -37,16 +37,12 @@ class ZTau3MuTaue : public Selection {
 	     SignalCandidate,
 	     HLT_reinforcements,
 	     TriggerMatch,
-	     TripletPT,
 	     nElectrons_PF_cut,
              nElectrons_dR,
              nElectrons_pT,
              nElectrons_eta,
              nElectrons_dz,
 	     OSCharge,
-	     ElectronIsolation,
-	     Tau3MuIsolation,
-	     VisMass,
 	     NCuts}; 
 
  protected:
@@ -111,6 +107,8 @@ class ZTau3MuTaue : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoMu_Eta;
   std::vector<TH1D>   Selection_Cut_RecoEl_Pt;
   std::vector<TH1D>   Selection_Cut_RecoEl_Eta;
+  
+  std::vector<TH1D>   Selection_TripletMass;
   
   std::vector<TH1D>   Electron_Isolation_relative;
   std::vector<TH1D>   Electron_Isolation_trackIso;
