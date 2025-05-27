@@ -191,6 +191,8 @@ class Ntuple_Controller{
       double    DeltaPhi(double, double);
       double    TruthNumberOfInteraction(){return Ntp->puN;}
       double    getMCEventWeight();
+      double    getRawMCEventWeight();
+      int       getBBCCMCEventType();
       TString   WhichEra(int year);
 
 

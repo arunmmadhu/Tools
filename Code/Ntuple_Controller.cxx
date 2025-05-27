@@ -232,15 +232,103 @@ Long64_t  Ntuple_Controller::GetMCID(){
            if(tau_3mu_idx>-0.5 && tau_e_idx>-0.5) DataMCTypeFromTuple=210231;
    
    }
+   
+   if (DataMCTypeFromTuple>180&&DataMCTypeFromTuple<190){//Some events that fail the redecay condition passes the filter because a different condition was passed. They have zero weight.
+           if((1.0/getRawMCEventWeight())>100000){
+                   DataMCTypeFromTuple=59999;//Gives those events a dummy value
+           }
+   }
+   
    return DataMCTypeFromTuple;
 
+}
+
+// return the event type of BBCC events
+int Ntuple_Controller::getBBCCMCEventType(){
+        if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
+                
+                
+                //std::cout << "Checking the event decay type.. "<<endl;
+                
+                bool IsFromCDecay = false;
+                bool IsFromBDecay = false;
+                
+                for (unsigned int imc = 0; imc < NMCParticles(); imc++) {
+                    int ancestor = MCParticle_midx(imc);
+                    std::set<int> visited;
+                
+                    while (ancestor >= 0) {
+                        if (visited.count(ancestor)) break;  // Prevent infinite loop
+                        visited.insert(ancestor);
+                
+                        int pdg = abs(MCParticle_pdgid(ancestor));
+                
+                        // Check for charm hadrons: mesons (400–499), baryons (4000–4999)
+                        if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000))
+                            IsFromCDecay = true;
+                
+                        // Check for bottom hadrons: mesons (500–599), baryons (5000–5999)
+                        if ((pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000))
+                            IsFromBDecay = true;
+                
+                        ancestor = MCParticle_midx(ancestor);
+                    }
+                }
+                
+                // Result interpretation
+                if (IsFromBDecay) {
+                    //std::cout << "Event is from BB decay.\n";
+                    return 10;
+                }
+                else if (IsFromCDecay) {
+                    //std::cout << "Event is from CC decay.\n";
+                    return 20;
+                }
+                else {
+                    //std::cout << "NEITHER b nor c ancestry found.\n";
+                    return 30;
+                }
+                
+                /*
+                std::cout<<"------------------------------- "<< std::endl;
+                std::cout<<"Event Content "<< std::endl;
+                printMCDecayChainOfEvent(true, true, true, true);
+                std::cout<< "\n\n\n\n\n\n";
+                */
+                
+        }
+        
+        return 1;
 }
 
 // return the weights of redecayed events
 double Ntuple_Controller::getMCEventWeight(){
         if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
-                //return 1.0/25000.0;
+                
+                if(Ntp->Event_DataMC_Type==181){
+                        return 0.00020032999490705638;
+                }
+                if(Ntp->Event_DataMC_Type==183){
+                        return 3.7593532704596435e-05;
+                }
+                if(Ntp->Event_DataMC_Type==185){
+                        return 2.9394874716038537e-05;
+                }
+                if(Ntp->Event_DataMC_Type==189){
+                        return 3.461925327654335e-05;
+                }
                 return Ntp->genWeight;
+                //return 1.0/25000.0;
+        }
+        return 1.0;
+}
+
+// return the raw weight of redecayed events from the MC
+double Ntuple_Controller::getRawMCEventWeight(){
+        if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
+                
+                return Ntp->genWeight;
+                //return 1.0/25000.0;
         }
         return 1.0;
 }
