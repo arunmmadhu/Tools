@@ -33,8 +33,7 @@ class ZTau3MuTaumu : public Selection {
   virtual void  Configure();
   virtual void  Finish();
   
-  enum cuts {WhetherZTTDecayFound=0,
-             L1_TriggerOk,
+  enum cuts {L1_TriggerOk=0,
 	     HLT_TriggerOk,
 	     SignalCandidate,
 	     HLT_reinforcements,
@@ -74,6 +73,13 @@ class ZTau3MuTaumu : public Selection {
   std::vector<TH1D>   dR_betweenTruth_Tau;
   std::vector<TH1D>   Z_Pt;
   std::vector<TH2D>   OS_vs_3mu_trigger;
+  
+  std::vector<TH1D>   Selection_Cut_No_of_candidates;
+  std::vector<TH1D>   Selection_Cut_SV_PV_FL_Significance_After_Candidate;
+  std::vector<TH1D>   Selection_Cut_PairMass_OppositeSign_dR12;
+  std::vector<TH1D>   Selection_Cut_PairMass_OppositeSign_dR13;
+  std::vector<TH1D>   Selection_Cut_DeltaR_SameSignMuons;
+  std::vector<TH1D>   Selection_Cut_SV_PV_FL_Significance_After_Preselections;
   
   std::vector<TH1D>   Selection_Cut_3mu_Pt;
   std::vector<TH1D>   Selection_Cut_3mu_Rel_Iso;

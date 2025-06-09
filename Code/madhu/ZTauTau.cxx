@@ -101,23 +101,20 @@ void  ZTauTau::Configure(){
   */
   
   //*** define the bdt reader for event selection
-  reader_Taue = new TMVA::Reader( "!Color:!Silent" );
+  reader_TauTau = new TMVA::Reader( "!Color:!Silent" );
   
   
-  reader_Taue->AddVariable("var_TripletPT",&var_TripletPT);
-  reader_Taue->AddVariable("var_Tau3MuIsolation",&var_Tau3MuIsolation);
+  reader_TauTau->AddVariable("var_mu3_pT",&var_mu3_pT);
+  reader_TauTau->AddVariable("var_TripletPT",&var_TripletPT);
+  reader_TauTau->AddVariable("var_TripletEta",&var_TripletEta);
+  reader_TauTau->AddVariable("var_Tau3MuIsolation",&var_Tau3MuIsolation);
+  reader_TauTau->AddVariable("var_FLSignificance",&var_FLSignificance);
+  reader_TauTau->AddVariable("var_SVPVTauDirAngle",&var_SVPVTauDirAngle);
+  reader_TauTau->AddVariable("var_ThreeMuVertexChi2KF",&var_ThreeMuVertexChi2KF);
+  reader_TauTau->AddVariable("var_MinDrToIsoTrack",&var_MinDrToIsoTrack);
+  reader_TauTau->AddVariable("var_MET_Et",&var_MET_Et);
   
-  
-  reader_Taue->AddVariable("var_Electron_pT",&var_Electron_pT);
-  
-  reader_Taue->AddVariable("var_ThreeMuVertexChi2KF",&var_ThreeMuVertexChi2KF);
-  reader_Taue->AddVariable("var_MinDrToIsoTrack",&var_MinDrToIsoTrack);
-  
-  reader_Taue->AddVariable("var_VisMass",&var_VisMass);
-  reader_Taue->AddVariable("var_DiTauMass_Collinear",&var_DiTauMass_Collinear);
-  reader_Taue->AddVariable("var_ElectronSumIsolation",&var_ElectronSumIsolation);
-  
-  reader_Taue->BookMVA( "BDT", "/afs/cern.ch/work/m/mmadhu/public/final_BDT/output_0_ZTT_e3mu/weights/TMVAClassification_BDT.weights.xml"); 
+  reader_TauTau->BookMVA( "BDT", "/afs/cern.ch/work/m/mmadhu/public/final_BDT/output_0_ZTT_tau_tau/weights/TMVAClassification_BDT.weights.xml"); 
   
   
   //*** define the bdt reader for event selection where the BDT was trained with bbbar/ccbar MC background
@@ -348,6 +345,17 @@ void  ZTauTau::Configure(){
   PostSelection_PairMass_OppositeSign_dR13=HConfig.GetTH1D(Name+"_PostSelection_PairMass_OppositeSign_dR13","PostSelection_PairMass_OppositeSign_dR13",40,0.2,2.,"M_{2}, GeV (OS - SS dR sorted)","Events");InputFeatureCollection.push_back(&PostSelection_PairMass_OppositeSign_dR13);
   
   
+  PostSelection_JetBTagCVSB_1=HConfig.GetTH1D(Name+"_PostSelection_JetBTagCVSB_1","PostSelection_JetBTagCVSB_1",40,-1.0,1.,"JetBTagCVSB leading","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagCVSB_1);
+  PostSelection_JetBTagMVA_1=HConfig.GetTH1D(Name+"_PostSelection_JetBTagMVA_1","PostSelection_JetBTagMVA_1",40,-1.0,1.,"JetBTagMVA leading","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagMVA_1);
+  PostSelection_JetBTagCSV_1=HConfig.GetTH1D(Name+"_PostSelection_JetBTagCSV_1","PostSelection_JetBTagCSV_1",40,-1.0,1.,"JetBTagCSV leading","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagCSV_1);
+  
+  
+  PostSelection_JetBTagCVSB_2=HConfig.GetTH1D(Name+"_PostSelection_JetBTagCVSB_2","PostSelection_JetBTagCVSB_2",40,-1.0,1.,"JetBTagCVSB trailing lead jet","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagCVSB_2);
+  PostSelection_JetBTagMVA_2=HConfig.GetTH1D(Name+"_PostSelection_JetBTagMVA_2","PostSelection_JetBTagMVA_2",40,-1.0,1.,"JetBTagMVA trailing lead jet","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagMVA_2);
+  PostSelection_JetBTagCSV_2=HConfig.GetTH1D(Name+"_PostSelection_JetBTagCSV_2","PostSelection_JetBTagCSV_2",40,-1.0,1.,"JetBTagCSV trailing lead jet","Events");InputFeatureCollection.push_back(&PostSelection_JetBTagCSV_2);
+  
+  
+  
   
   
   //Plots after BDT
@@ -395,6 +403,15 @@ void  ZTauTau::Configure(){
   
   PostBDT_PairMass_OppositeSign_dR12=HConfig.GetTH1D(Name+"_PostBDT_PairMass_OppositeSign_dR12","PostBDT_PairMass_OppositeSign_dR12",40,0.2,2.,"M_{1}, GeV (OS - SS dR sorted)","Events");InputFeatureCollection.push_back(&PostBDT_PairMass_OppositeSign_dR12);
   PostBDT_PairMass_OppositeSign_dR13=HConfig.GetTH1D(Name+"_PostBDT_PairMass_OppositeSign_dR13","PostBDT_PairMass_OppositeSign_dR13",40,0.2,2.,"M_{2}, GeV (OS - SS dR sorted)","Events");InputFeatureCollection.push_back(&PostBDT_PairMass_OppositeSign_dR13);
+  
+  
+  PostBDT_JetBTagCVSB_1=HConfig.GetTH1D(Name+"_PostBDT_JetBTagCVSB_1","PostBDT_JetBTagCVSB_1",40,-1.0,1.,"JetBTagCVSB leading","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagCVSB_1);
+  PostBDT_JetBTagMVA_1=HConfig.GetTH1D(Name+"_PostBDT_JetBTagMVA_1","PostBDT_JetBTagMVA_1",40,-1.0,1.,"JetBTagMVA leading","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagMVA_1);
+  PostBDT_JetBTagCSV_1=HConfig.GetTH1D(Name+"_PostBDT_JetBTagCSV_1","PostBDT_JetBTagCSV_1",40,-1.0,1.,"JetBTagCSV leading","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagCSV_1);
+  
+  PostBDT_JetBTagCVSB_2=HConfig.GetTH1D(Name+"_PostBDT_JetBTagCVSB_2","PostBDT_JetBTagCVSB_2",40,-1.0,1.,"JetBTagCVSB trailing lead jet","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagCVSB_2);
+  PostBDT_JetBTagMVA_2=HConfig.GetTH1D(Name+"_PostBDT_JetBTagMVA_2","PostBDT_JetBTagMVA_2",40,-1.0,1.,"JetBTagMVA trailing lead jet","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagMVA_2);
+  PostBDT_JetBTagCSV_2=HConfig.GetTH1D(Name+"_PostBDT_JetBTagCSV_2","PostBDT_JetBTagCSV_2",40,-1.0,1.,"JetBTagCSV trailing lead jet","Events");InputFeatureCollection.push_back(&PostBDT_JetBTagCSV_2);
   
   
   //Pre BDT 2D scan
@@ -557,6 +574,14 @@ void  ZTauTau::Store_ExtraDist(){
   Extradist1d.push_back(&PostSelection_PairMass_OppositeSign_dR12);
   Extradist1d.push_back(&PostSelection_PairMass_OppositeSign_dR13);
   
+  Extradist1d.push_back(&PostSelection_JetBTagCVSB_1);
+  Extradist1d.push_back(&PostSelection_JetBTagMVA_1);
+  Extradist1d.push_back(&PostSelection_JetBTagCSV_1);
+  
+  Extradist1d.push_back(&PostSelection_JetBTagCVSB_2);
+  Extradist1d.push_back(&PostSelection_JetBTagMVA_2);
+  Extradist1d.push_back(&PostSelection_JetBTagCSV_2);
+  
   //Post BDT
   Extradist1d.push_back(&PostBDT_TripletMass_VeryLooseCut);
   
@@ -591,6 +616,14 @@ void  ZTauTau::Store_ExtraDist(){
   
   Extradist1d.push_back(&PostBDT_PairMass_OppositeSign_dR12);
   Extradist1d.push_back(&PostBDT_PairMass_OppositeSign_dR13);
+  
+  Extradist1d.push_back(&PostBDT_JetBTagCVSB_1);
+  Extradist1d.push_back(&PostBDT_JetBTagMVA_1);
+  Extradist1d.push_back(&PostBDT_JetBTagCSV_1);
+  
+  Extradist1d.push_back(&PostBDT_JetBTagCVSB_2);
+  Extradist1d.push_back(&PostBDT_JetBTagMVA_2);
+  Extradist1d.push_back(&PostBDT_JetBTagCSV_2);
   
   //Pre BDT 2D scan
   Extradist2d.push_back(&BDT_2Dscan_Tau3MuRelativeIsolation);
@@ -1012,7 +1045,35 @@ void  ZTauTau::doEvent(){
     TLorentzVector Tau3muLV = Ntp->Muon_P4(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0)) + 
       Ntp->Muon_P4(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1)) + 
       Ntp->Muon_P4(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2));
+      
+      
+    //B-Tagging vars
     
+    int highest_pt_jet_idx(-1);
+    double highest_pt_of_jet(-1.0);
+    int second_highest_pt_jet_idx(-1);
+    double second_highest_pt_of_jet(-1.0);
+    
+    TLorentzVector JetLV(0.,0.,0.,0.);
+    
+    for(int i=0;i<Ntp->NJets();i++){
+            JetLV=Ntp->Jet_P4(i);
+            if(JetLV.Pt()>highest_pt_of_jet){
+                    highest_pt_of_jet=JetLV.Pt();
+                    highest_pt_jet_idx=i;
+            }
+    }
+    for(int i=0;i<Ntp->NJets();i++){
+            JetLV=Ntp->Jet_P4(i);
+            if(JetLV.Pt()>second_highest_pt_of_jet && i!= highest_pt_jet_idx){
+                    second_highest_pt_of_jet=JetLV.Pt();
+                    second_highest_pt_jet_idx=i;
+            }
+    }
+    
+    //std::cout<<" NJets:  "<< Ntp->NJets() << std::endl;
+    //std::cout<<" highest_pt:  "<< highest_pt_of_jet << " highest_pt idx:  "<< highest_pt_jet_idx << std::endl;
+    //std::cout<<" second_highest_pt_of_jet:  "<< second_highest_pt_of_jet << " second_highest_pt_jet_idx idx:  "<< second_highest_pt_jet_idx << std::endl;
     
     //Primary Vertex
     double val_FLSignificance=Ntp->FlightLength_significance(Ntp->Vertex_HighestPt_PrimaryVertex(),Ntp->Vertex_HighestPt_PrimaryVertex_Covariance(),
@@ -1174,8 +1235,7 @@ void  ZTauTau::doEvent(){
         T3MMiniTree->Fill();
         
         //Evaluate BDT
-        //BDT_Evaluated = reader_Taue->EvaluateMVA("BDT");
-        BDT_Evaluated = 0.0;
+        BDT_Evaluated = reader_TauTau->EvaluateMVA("BDT");
         
         
         
@@ -1283,6 +1343,17 @@ void  ZTauTau::doEvent(){
     if(PlotMCOnly)  PostSelection_TripletMass.at(t).Fill(TauRefitLV.M(),1);
     
     PostSelection_BDT_Output.at(t).Fill(BDT_Evaluated);
+    
+    
+    if(Ntp->NJets()>1){
+            PostSelection_JetBTagCVSB_1.at(t).Fill(Ntp->JetBTagCVSB(highest_pt_jet_idx),1);
+            PostSelection_JetBTagMVA_1.at(t).Fill(Ntp->JetBTagMVA(highest_pt_jet_idx),1);
+            PostSelection_JetBTagCSV_1.at(t).Fill(Ntp->JetBTagCSV(highest_pt_jet_idx),1);
+            
+            PostSelection_JetBTagCVSB_2.at(t).Fill(Ntp->JetBTagCVSB(second_highest_pt_jet_idx),1);
+            PostSelection_JetBTagMVA_2.at(t).Fill(Ntp->JetBTagMVA(second_highest_pt_jet_idx),1);
+            PostSelection_JetBTagCSV_2.at(t).Fill(Ntp->JetBTagCSV(second_highest_pt_jet_idx),1);
+    }
         
         
         
@@ -1352,7 +1423,7 @@ void  ZTauTau::doEvent(){
         }
         
         //if(BDT_Evaluated>0.333186){
-        if(BDT_Evaluated>0.175){
+        if(BDT_Evaluated>0.0){
         
         PostBDT_TripletPt.at(t).Fill(var_TripletPT);
         PostBDT_TripletEta.at(t).Fill(var_TripletEta);
@@ -1391,6 +1462,19 @@ void  ZTauTau::doEvent(){
         
         if(PlotMCOnly)  PostBDT_TripletMass.at(t).Fill(TauRefitLV.M(),1);
         
+        
+        if(Ntp->NJets()>1){
+            
+            PostSelection_JetBTagCVSB_2.at(t).Fill(Ntp->JetBTagCVSB(highest_pt_jet_idx),1);
+            PostSelection_JetBTagMVA_2.at(t).Fill(Ntp->JetBTagMVA(highest_pt_jet_idx),1);
+            PostSelection_JetBTagCSV_2.at(t).Fill(Ntp->JetBTagCSV(highest_pt_jet_idx),1);
+            
+            PostSelection_JetBTagCVSB_2.at(t).Fill(Ntp->JetBTagCVSB(second_highest_pt_jet_idx),1);
+            PostSelection_JetBTagMVA_2.at(t).Fill(Ntp->JetBTagMVA(second_highest_pt_jet_idx),1);
+            PostSelection_JetBTagCSV_2.at(t).Fill(Ntp->JetBTagCSV(second_highest_pt_jet_idx),1);
+        }
+        
+        
         }//if BDT
 
   }
@@ -1415,8 +1499,8 @@ void  ZTauTau::Finish(){
       double scale(1.0);
       if(InputFeatureCollection.at(j)->size()>=4){
         //if(InputFeatureCollection.at(j)->at(3).Integral()!=0) scale = InputFeatureCollection.at(j)->at(0).Integral()/(InputFeatureCollection.at(j)->at(3).Integral()*lumi_scale_1_taue);
-        if(InputFeatureCollection.at(j)->at(1).Integral()!=0) scale = InputFeatureCollection.at(j)->at(0).Integral()/(InputFeatureCollection.at(j)->at(1).Integral());
-        InputFeatureCollection.at(j)->at(1).Scale(scale);
+        if(InputFeatureCollection.at(j)->at(2).Integral()!=0) scale = InputFeatureCollection.at(j)->at(0).Integral()/(InputFeatureCollection.at(j)->at(2).Integral());
+        InputFeatureCollection.at(j)->at(2).Scale(scale);
       }
     }
   }

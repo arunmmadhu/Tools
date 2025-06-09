@@ -157,6 +157,14 @@ class ZTauTau : public Selection {
   std::vector<TH1D>   PostSelection_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostSelection_PairMass_OppositeSign_dR13;
   
+  std::vector<TH1D>   PostSelection_JetBTagCVSB_1;
+  std::vector<TH1D>   PostSelection_JetBTagMVA_1;
+  std::vector<TH1D>   PostSelection_JetBTagCSV_1;
+  
+  std::vector<TH1D>   PostSelection_JetBTagCVSB_2;
+  std::vector<TH1D>   PostSelection_JetBTagMVA_2;
+  std::vector<TH1D>   PostSelection_JetBTagCSV_2;
+  
   //After BDT
   
   std::vector<TH1D>   PostBDT_TripletMass_VeryLooseCut;
@@ -205,6 +213,14 @@ class ZTauTau : public Selection {
   
   std::vector<TH1D>   PostBDT_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostBDT_PairMass_OppositeSign_dR13;
+  
+  std::vector<TH1D>   PostBDT_JetBTagCVSB_1;
+  std::vector<TH1D>   PostBDT_JetBTagMVA_1;
+  std::vector<TH1D>   PostBDT_JetBTagCSV_1;
+  
+  std::vector<TH1D>   PostBDT_JetBTagCVSB_2;
+  std::vector<TH1D>   PostBDT_JetBTagMVA_2;
+  std::vector<TH1D>   PostBDT_JetBTagCSV_2;
   
   //Pre BDT 2D scan
   
@@ -300,7 +316,7 @@ class ZTauTau : public Selection {
   Float_t dimu_OS2;
   
   
-  TMVA::Reader *reader_Taue;
+  TMVA::Reader *reader_TauTau;
   TMVA::Reader *reader_Taue_MC_Bkg;
   
   
