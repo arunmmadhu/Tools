@@ -27,20 +27,12 @@ void  ZTau3MuTauh_Skimmer::Configure(){
 
   T3MMiniTree= new TTree("T3MMiniTree","T3MMiniTree");
 
-  T3MMiniTree->Branch("m3m",&m3m);
   T3MMiniTree->Branch("dataMCtype",&dataMCtype);
-  T3MMiniTree->Branch("event_weight",&event_weight);
-  T3MMiniTree->Branch("m12",&m12);
-  T3MMiniTree->Branch("m13",&m13);
-  T3MMiniTree->Branch("LumiScale",&LumiScale);
   
-  T3MMiniTree->Branch("var_TripletPT",&var_TripletPT);
-  T3MMiniTree->Branch("var_Tau3MuIsolation",&var_Tau3MuIsolation);
-  T3MMiniTree->Branch("var_Tau_pT",&var_Tau_pT);
-  T3MMiniTree->Branch("var_VisMass",&var_VisMass);
-  T3MMiniTree->Branch("var_mu1_pT",&var_mu1_pT);
-  T3MMiniTree->Branch("var_mu2_pT",&var_mu2_pT);
-  T3MMiniTree->Branch("var_mu3_pT",&var_mu3_pT);
+  T3MMiniTree->Branch("hadron_pt",&hadron_pt);
+  T3MMiniTree->Branch("hadron_nStop",&hadron_nStop);
+  T3MMiniTree->Branch("hadron_type",&hadron_type);
+  T3MMiniTree->Branch("parton_pt",&parton_pt);
 
 
   for(int i=0; i<NCuts;i++){
@@ -172,6 +164,20 @@ void  ZTau3MuTauh_Skimmer::Configure(){
   Selection_Cut_RecoMu_Eta=HConfig.GetTH1D(Name+"_Selection_Cut_RecoMu_Eta","Selection_Cut_RecoMu_Eta",50,2,3.0,"#mu |#eta|","Events");
   Selection_Cut_RecoH_Pt=HConfig.GetTH1D(Name+"_Selection_Cut_RecoH_Pt","Selection_Cut_RecoH_Pt",100,10.0,20.0,"p_{T}, GeV","Events");
   Selection_Cut_RecoH_Eta=HConfig.GetTH1D(Name+"_Selection_Cut_RecoH_Eta","Selection_Cut_RecoH_Eta",50,2,3.0,"|#eta|","Events");
+  
+  Selection_bb_nStop_Distribution=HConfig.GetTH1D(Name+"_Selection_bb_nStop_Distribution","Selection_bb_nStop_Distribution",1000,0.5,25000.5,"N, bb","Events");
+  Selection_cc_nStop_Distribution=HConfig.GetTH1D(Name+"_Selection_cc_nStop_Distribution","Selection_cc_nStop_Distribution",1000,0.5,25000.5,"N, cc","Events");
+  
+  OS_vs_3mu_trigger=HConfig.GetTH2D(Name+"_OS_vs_3mu_trigger","OS_vs_3mu_trigger",3,-0.5,2.5,2,-0.5,1.5,"Whether 3mu Triggered","Whether OS #tau Triggered");
+  
+  Selection_bb_nStop_2D_Distribution=HConfig.GetTH2D(Name+"_Selection_bb_nStop_2D_Distribution","Selection_bb_nStop_2D_Distribution",100,-0.5,99.5,500,0.5,25000.5,"p_{T}","nStop");
+  Selection_cc_nStop_2D_Distribution=HConfig.GetTH2D(Name+"_Selection_cc_nStop_2D_Distribution","Selection_cc_nStop_2D_Distribution",100,-0.5,99.5,500,0.5,25000.5,"p_{T}","nStop");
+  
+  Selection_TypeA_bbbar=HConfig.GetTH1D(Name+"_Selection_TypeA_bbbar","Selection_TypeA_bbbar",100,-0.5,99.5,"p_{T}, TypeA","Events");
+  Selection_TypeB_bbbar=HConfig.GetTH1D(Name+"_Selection_TypeB_bbbar","Selection_TypeB_bbbar",100,-0.5,99.5,"p_{T}, TypeB","Events");
+  
+  Selection_TypeA_ccbar=HConfig.GetTH1D(Name+"_Selection_TypeA_ccbar","Selection_TypeA_ccbar",100,-0.5,99.5,"p_{T}, TypeA","Events");
+  Selection_TypeB_ccbar=HConfig.GetTH1D(Name+"_Selection_TypeB_ccbar","Selection_TypeB_ccbar",100,-0.5,99.5,"p_{T}, TypeB","Events");
 
   Npassed=HConfig.GetTH1D(Name+"_NPass","Cut Flow",NCuts+1,-1,NCuts,"Number of Accumulative Cuts Passed","Events"); // Do not remove
   // Setup Extra Histograms
@@ -264,6 +270,15 @@ void  ZTau3MuTauh_Skimmer::Store_ExtraDist(){
   Extradist1d.push_back(&Selection_Cut_RecoMu_Eta);
   Extradist1d.push_back(&Selection_Cut_RecoH_Pt);
   Extradist1d.push_back(&Selection_Cut_RecoH_Eta);
+  
+  Extradist1d.push_back(&Selection_bb_nStop_Distribution);
+  Extradist1d.push_back(&Selection_cc_nStop_Distribution);
+  Extradist2d.push_back(&Selection_bb_nStop_2D_Distribution);
+  Extradist2d.push_back(&Selection_cc_nStop_2D_Distribution);
+  Extradist1d.push_back(&Selection_TypeA_bbbar);
+  Extradist1d.push_back(&Selection_TypeB_bbbar);
+  Extradist1d.push_back(&Selection_TypeA_ccbar);
+  Extradist1d.push_back(&Selection_TypeB_ccbar);
 
 
 
@@ -693,6 +708,171 @@ void  ZTau3MuTauh_Skimmer::doEvent(){
   
   double wobs=1;
   double w;  
+  
+  //std::cout << "This is an event" << std::endl;
+  
+  if (id>180&&id<190){
+          
+          float maxMass = -1.0;
+          int heaviestIndex = -1;
+          float partPt = -1;
+          float actual_partonPt = -1;
+          
+          const std::unordered_set<int> targetPDGs = {511, 521, 513, 523, 531, 533, 541, 5122, 411, 421, 413, 423, 431, 433, 415, 10411};
+          
+          for (unsigned int imc = 0; imc < Ntp->NMCParticles(); ++imc) {
+                    int pdg = abs(Ntp->MCParticle_pdgid(imc));
+                    int stat = Ntp->MCParticle_status(imc);
+                
+                    //if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000) || (pdg >= 10400 && pdg < 10500) || (pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000) || (pdg >= 10500 && pdg < 10600) ) {
+                    if (targetPDGs.count(pdg)) {
+                        float mass = Ntp->MCParticle_p4(imc).M();
+                        if (mass > maxMass) {
+                            maxMass = mass;
+                            heaviestIndex = imc;
+                            partPt=Ntp->MCParticle_p4(imc).Pt();
+                        }
+                    }
+                    
+                    if ((pdg == 4 || pdg == 5) && (stat >= 21 && stat <= 29) ) {
+                            actual_partonPt = Ntp->MCParticle_p4(imc).Pt();
+                            //std::cout << "PDGID is:  " << pdg << " with pt: "<< actual_partonPt << std::endl;
+                    }
+          }
+          
+          if(Ntp->getBBCCMCEventType()==10){
+                  Selection_bb_nStop_Distribution.at(t).Fill(1.0/Ntp->getRawMCEventWeight(),1 );
+                  Selection_bb_nStop_2D_Distribution.at(t).Fill(partPt,1.0/Ntp->getRawMCEventWeight());
+          }
+          if(Ntp->getBBCCMCEventType()==20){
+                  Selection_cc_nStop_Distribution.at(t).Fill(1.0/Ntp->getRawMCEventWeight(),1 );
+                  Selection_cc_nStop_2D_Distribution.at(t).Fill(partPt,1.0/Ntp->getRawMCEventWeight());
+          }
+          
+          
+          if(Ntp->getBBCCMCEventType()==10){
+                  //Selection_TypeA.at(t).Fill(partPt,1 );
+          }
+          if(Ntp->getBBCCMCEventType()==20){
+                  //Selection_TypeB.at(t).Fill(partPt,1 );
+          }
+          
+          
+          if(Ntp->getBBCCMCEventType()==10){
+                  
+                  double A1 = 3.55441e+06;
+                  double p1 = 0.00173956;
+                  double A2 = 4.35583e+06;
+                  double p2 = 0.000132911;
+                  
+                  /*
+                  double A1 = 1.41101e+06;
+                  double p1 = 0.000573582;
+                  double A2 = 3.60691e+06;
+                  double p2 = 8.13196e-05;
+                  */
+                  
+                  int x = 1.0/Ntp->getRawMCEventWeight();  // or however you store it
+                  
+                  double P1 = A1 * p1 * pow(1 - p1, x - 1);
+                  double P2 = A2 * p2 * pow(1 - p2, x - 1);
+                  double Ptot = P1 + P2;
+                  
+                  double prob_from_1 = P1 / Ptot;
+                  
+                  // Decide or classify
+                  if (prob_from_1 > 0.5) {
+                          //std::cout << "Likely from population 1 " << std::endl;
+                          // Likely from population 1
+                          //std::cout<<"------------------------------- "<< std::endl;
+                          //std::cout<<"Event Content of population 1 "<< std::endl;
+                          //Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                          //std::cout<< "\n\n\n\n\n\n";
+                          //std::cout << "Heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                          
+                          //Selection_TypeA.at(t).Fill(partPt,1 );
+                          
+                  } else if (prob_from_1 < 0.5) {
+                          //std::cout << "Likely from population 2 " << std::endl;
+                          // Likely from population 2
+                          //std::cout<<"------------------------------- "<< std::endl;
+                          //std::cout<<"Event Content of population 2 "<< std::endl;
+                          //Ntp->printMCDecayChainOfEvent(true, true, true, true);
+                          //std::cout<< "\n\n\n\n\n\n";
+                          //std::cout << "Heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                          
+                          //Selection_TypeB.at(t).Fill(partPt,1 );
+                          
+                  } else {
+                          //std::cout << "Uncertain " << std::endl;
+                          // Uncertain
+                  }
+                  
+                  
+                  
+          }
+          
+          //pT plots
+          if ((1.0/Ntp->getRawMCEventWeight())<50) {
+                  //std::cout << "TypeA event " << std::endl;
+                  //std::cout << "Heaviest B or D hadron: "<< maxMass << " pT: " << partPt << std::endl;
+                  if(Ntp->getBBCCMCEventType()==10){
+                          Selection_TypeA_bbbar.at(t).Fill(actual_partonPt,1 );
+                          //std::cout << "Type A bbbar, heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                  }
+                  if(Ntp->getBBCCMCEventType()==20){
+                          Selection_TypeA_ccbar.at(t).Fill(actual_partonPt,1 );
+                          //std::cout << "Type A ccbar, heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                  }
+                  
+          }
+          
+          if ((1.0/Ntp->getRawMCEventWeight())>20000) {
+                  //std::cout << "TypeB event " << std::endl;
+                  //std::cout << "Heaviest B or D hadron: "<< maxMass << " pT: " << partPt << std::endl;
+                  if(Ntp->getBBCCMCEventType()==10){
+                          Selection_TypeB_bbbar.at(t).Fill(actual_partonPt,1 );
+                          //std::cout << "Type B bbbar, heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                  }
+                  if(Ntp->getBBCCMCEventType()==20){
+                          Selection_TypeB_ccbar.at(t).Fill(actual_partonPt,1 );
+                          //std::cout << "Type B ccbar, heaviest B or D hadron: "<< maxMass << " pT: " << partPt << " parton pT: "<< actual_partonPt << std::endl;
+                  }
+          }
+          
+          
+          dataMCtype=id;
+          hadron_pt=partPt;
+          hadron_nStop=1.0/Ntp->getRawMCEventWeight();
+          hadron_type=Ntp->getBBCCMCEventType();
+          parton_pt=actual_partonPt;
+          T3MMiniTree->Fill();
+          
+  }
+  
+  /*
+  if((!Ntp->getBBCCMCEventType()==10)||(!Ntp->getBBCCMCEventType()==20)||(1.0/Ntp->getMCEventWeight())<0.5||(1.0/Ntp->getMCEventWeight())>25000.5){
+        std::cout << "Some thing's wrong. Type: " << Ntp->getBBCCMCEventType() << " nStop: " << (1.0/Ntp->getMCEventWeight()) << std::endl;
+        
+        if(signal_idx!=-1){
+        unsigned int muon_1_idx = Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0);
+        unsigned int muon_2_idx = Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1);
+        unsigned int muon_3_idx = Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2);
+        
+        TLorentzVector Muon1LV = Ntp->Muon_P4(muon_1_idx);
+        TLorentzVector Muon2LV = Ntp->Muon_P4(muon_2_idx);
+        TLorentzVector Muon3LV = Ntp->Muon_P4(muon_3_idx);  
+              
+        std::cout<<"------------------------------- "<< std::endl;
+        std::cout<<"Event Content "<< std::endl;
+        std::cout<<" idx1:  "<<Ntp->getMatchTruthIndex(Muon1LV) << std::endl;
+        std::cout<<" idx2:  "<<Ntp->getMatchTruthIndex(Muon2LV) << std::endl;
+        std::cout<<" idx3:  "<<Ntp->getMatchTruthIndex(Muon3LV) << std::endl;
+        Ntp->printMCDecayChainOfEvent(true, true, true, true);
+        std::cout<< "\n\n\n\n\n\n";
+        }
+  }
+  */
              
   if(!Ntp->isData()){w = 1; /*Ntp->PUReweight(); */} //  No weights to data
   else{w=1;}

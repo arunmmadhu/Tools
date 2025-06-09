@@ -6,3 +6,7 @@ Histo: 550      1.32       MC4 ZZ\rightarrow4l   10
 Histo: 560      5.09       MC5 WZ\rightarrow3l\nu   45
 Histo: 700      687.10     MC6 t\bar{t} 68
 Histo: 120      760.0      MC7 b\bar{b}/c\bar{c}\rightarrow3\mu  25
+Histo: 181      760.0      MC7 b\bar{b}/c\bar{c}\rightarrow3\mu(type1)  26
+Histo: 183      760.0      MC7 b\bar{b}/c\bar{c}\rightarrow3\mu(type3)  27
+Histo: 185      760.0      MC7 b\bar{b}/c\bar{c}\rightarrow3\mu(type5)  28
+Histo: 189      760.0      MC7 b\bar{b}/c\bar{c}\rightarrow3\mu(type9) 30

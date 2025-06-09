@@ -40,11 +40,10 @@ class ZTau3MuTauh : public Selection {
 	     SignalCandidate,
 	     HLT_reinforcements,
 	     TriggerMatch,
+             nTaus_pT_eta,
              nTaus_dR,
-             nTaus_pT,
-             nTaus_eta,
-             nTaus_dz,
-	     OSCharge,
+             OSCharge,
+	     nTaus_dz,
 	     DeepTauJets,
 	     DeepTauMuons,
 	     DeepTauElectrons,
@@ -116,6 +115,16 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoH_Eta;
   
   std::vector<TH1D>   Selection_TripletMass;
+  
+  std::vector<TH1D>   Selection_bbbar_precut;
+  std::vector<TH1D>   Selection_bbbar_HLT;
+  std::vector<TH1D>   Selection_bbbar_OS_presence;
+  std::vector<TH1D>   Selection_bbbar_after_presel;
+  
+  std::vector<TH1D>   Selection_ccbar_precut;
+  std::vector<TH1D>   Selection_ccbar_HLT;
+  std::vector<TH1D>   Selection_ccbar_OS_presence;
+  std::vector<TH1D>   Selection_ccbar_after_presel;
   
   //After Selection
   

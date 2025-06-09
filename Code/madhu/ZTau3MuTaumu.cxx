@@ -211,9 +211,7 @@ void  ZTau3MuTaumu::Configure(){
     if(i==SignalCandidate)    cut.at(SignalCandidate)=1;
     if(i==HLT_reinforcements) cut.at(HLT_reinforcements)=1;
     if(i==OSCharge)           cut.at(OSCharge)=1;
-    if(i==nMuons_PF_GL)       cut.at(nMuons_PF_GL)=1;
-    if(i==nMuons_pT)          cut.at(nMuons_pT)=3.0;
-    if(i==nMuons_eta)         cut.at(nMuons_eta)=2.4;
+    if(i==nMuons_PF_GL_pT_eta)       cut.at(nMuons_PF_GL_pT_eta)=1;
     if(i==nMuons_dR)          cut.at(nMuons_dR)=0.5;
     if(i==nMuons_dz)          cut.at(nMuons_dz)=0.2;
     if(i==TriggerMatch)       cut.at(TriggerMatch)=1;
@@ -245,36 +243,18 @@ void  ZTau3MuTaumu::Configure(){
       Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_WhetherZTTDecayFound_",htitle,2,-0.5,1.5,hlabel,"Events"));
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_WhetherZTTDecayFound_",htitle,2,-0.5,1.5,hlabel,"Events"));
     }
-    else if(i==nMuons_PF_GL){
+    else if(i==nMuons_PF_GL_pT_eta){
       //      title.at(i)=" At least one extra loose(PF+Gl/Tr) $\\mu$, $pT>15 GeV, |\\eta| < 2.4$ ";
-      title.at(i)=" At least one extra (PF+GL+Soft) $\\mu$";
+      title.at(i)=" At least one extra (PF+GL+Soft) $\\mu$ with $pT>3.0 GeV$ and $|\\eta| < 2.4$";
       hlabel="At least one extra muon (loose)";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
-      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nMuons_PF_GL_",htitle,4,-0.5,3.5,hlabel,"Events"));
-      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nMuons_PF_GL_",htitle,4,-0.5,3.5,hlabel,"Events"));
-    }
-    else if(i==nMuons_pT){
-      //      title.at(i)=" At least one extra loose(PF+Gl/Tr) $\\mu$, $pT>15 GeV, |\\eta| < 2.4$ ";
-      title.at(i)=" At least one extra $\\mu$, $pT>3.0 GeV$";
-      hlabel="pT, GeV";
-      htitle.ReplaceAll("$","");
-      htitle.ReplaceAll("\\","#");
-      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nMuons_pT_",htitle,80,0.0,40,hlabel,"Events"));
-      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nMuons_pT_",htitle,80,0.0,40,hlabel,"Events"));
-    }
-    else if(i==nMuons_eta){
-      //      title.at(i)=" At least one extra loose(PF+Gl/Tr) $\\mu$, $pT>15 GeV, |\\eta| < 2.4$ ";
-      title.at(i)=" At least one extra $\\mu$, $|\\eta| < 2.4$";
-      hlabel="$|\\eta|$";
-      htitle.ReplaceAll("$","");
-      htitle.ReplaceAll("\\","#");
-      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nMuons_eta_",htitle,20,2.0,3.0,hlabel,"Events"));
-      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nMuons_eta_",htitle,20,2.0,3.0,hlabel,"Events"));
+      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nMuons_PF_GL_pT_eta_",htitle,4,-0.5,3.5,hlabel,"Events"));
+      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nMuons_PF_GL_pT_eta_",htitle,4,-0.5,3.5,hlabel,"Events"));
     }
     else if(i==nMuons_dR){
       //      title.at(i)=" At least one extra loose(PF+Gl/Tr) $\\mu$, $pT>15 GeV, |\\eta| < 2.4$ ";
-      title.at(i)=" At least one extra $\\mu$, $\\Delta R (\\mu-3\\mu) >$ 0.5";
+      title.at(i)=" At least one extra $\\mu$ on opposite side with $\\Delta R (\\mu-3\\mu) >$ 0.5";
       hlabel="$\\Delta R (\\mu-3\\mu) $";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
@@ -283,7 +263,7 @@ void  ZTau3MuTaumu::Configure(){
     }
     else if(i==nMuons_dz){
       //      title.at(i)=" At least one extra loose(PF+Gl/Tr) $\\mu$, $pT>15 GeV, |\\eta| < 2.4$ ";
-      title.at(i)=" At least one $\\mu$ with dz to PV $<$ 0.2";
+      title.at(i)=" At least one extra $\\mu$ with dz to PV $<$ 0.2";
       hlabel="$dz (\\mu,PV) $";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
@@ -301,7 +281,7 @@ void  ZTau3MuTaumu::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_SignalCandidate_",htitle,5,-0.5,4.5,hlabel,"Events"));
     }
     else if(i==HLT_reinforcements){
-      title.at(i)="HLT Reinforcements ($\\mu_{1,Pt}>$7.0, $\\mu_{2,Pt}>$1.0, $\\mu_{3,Pt}>$1.0, dR($\\mu_{i} , \\mu_{j}$)$<$0.5 for atleast one muon pair, Invariant Mass ($\\mu_{i} , \\mu_{j}$)$<$1.9 for atleast one muon pair, $\\tau_{3\\mu,Pt}>$15.0, $\\tau_{3\\mu,\\eta}<$2.5";
+      title.at(i)="HLT Reinforcements ($\\mu_{1,Pt}>$7.0, $\\mu_{2,Pt}>$1.0, $\\mu_{3,Pt}>$1.0, dR($\\mu_{i} , \\mu_{j}$)$<$0.5 for atleast one muon pair, invariant Mass ($\\mu_{i} , \\mu_{j}$)$<$1.9 for atleast one muon pair, $\\tau_{3\\mu,Pt}>$15.0, $\\tau_{3\\mu,\\eta}<$2.5";
       htitle=title.at(i);
       hlabel="HLT Reinforcements";
       htitle.ReplaceAll("$","");
@@ -310,7 +290,7 @@ void  ZTau3MuTaumu::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_HLT_reinforcements_",htitle,2,-0.5,1.5,hlabel,"Events"));
     }
     else if(i==OSCharge){
-      title.at(i)="Charge $\\mu$ * $\\tau_{3\\mu}$ = -1 ";
+      title.at(i)="Charge $\\mu$ * $\\tau_{3\\mu}$ = -1 (at least one such $\\mu$)";
       title.at(i)+=" (at least one)";
       htitle=title.at(i);
       hlabel="Opposite charge ";
@@ -321,7 +301,7 @@ void  ZTau3MuTaumu::Configure(){
     }
 
     else if(i==TriggerMatch){
-      title.at(i)="Selected (by closest to hltTau3MuIsoFilterCharge1) 3$\\mu$ matched to trg ";
+      title.at(i)=" 3$\\mu$ trigger matched (by closest to hltTau3MuIsoFilterCharge1)";
       hlabel="Trigger Matched ";
       Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_TriggerMatch_",htitle,2,-0.5,1.5,hlabel,"Events"));
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_TriggerMatch_",htitle,2,-0.5,1.5,hlabel,"Events"));
@@ -380,6 +360,16 @@ void  ZTau3MuTaumu::Configure(){
   Selection_Cut_RecoMu_Eta=HConfig.GetTH1D(Name+"_Selection_Cut_RecoMu_Eta","Selection_Cut_RecoMu_Eta",50,2,3.0,"#mu |#eta|","Events");
   
   Selection_TripletMass=HConfig.GetTH1D(Name+"_Selection_TripletMass","Selection_TripletMass",40,1.4,2.1,"M_{3#mu}, GeV","Events");
+  
+  Selection_bbbar_precut=HConfig.GetTH1D(Name+"_Selection_bbbar_precut","Selection_bbbar_precut",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_HLT=HConfig.GetTH1D(Name+"_Selection_bbbar_HLT","Selection_bbbar_HLT",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_OS_presence=HConfig.GetTH1D(Name+"_Selection_bbbar_OS_presence","Selection_bbbar_OS_presence",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_after_presel=HConfig.GetTH1D(Name+"_Selection_bbbar_after_presel","Selection_bbbar_after_presel",100,-0.5,99.5,"p_{T}","Events");
+  
+  Selection_ccbar_precut=HConfig.GetTH1D(Name+"_Selection_ccbar_precut","Selection_ccbar_precut",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_HLT=HConfig.GetTH1D(Name+"_Selection_ccbar_HLT","Selection_ccbar_HLT",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_OS_presence=HConfig.GetTH1D(Name+"_Selection_ccbar_OS_presence","Selection_ccbar_OS_presence",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_after_presel=HConfig.GetTH1D(Name+"_Selection_ccbar_after_presel","Selection_ccbar_after_presel",100,-0.5,99.5,"p_{T}","Events");
   
   //Plots after Selection
   
@@ -638,6 +628,15 @@ void  ZTau3MuTaumu::Store_ExtraDist(){
   
   Extradist1d.push_back(&Selection_TripletMass);
   
+  Extradist1d.push_back(&Selection_bbbar_precut);
+  Extradist1d.push_back(&Selection_bbbar_HLT);
+  Extradist1d.push_back(&Selection_bbbar_OS_presence);
+  Extradist1d.push_back(&Selection_bbbar_after_presel);
+  Extradist1d.push_back(&Selection_ccbar_precut);
+  Extradist1d.push_back(&Selection_ccbar_HLT);
+  Extradist1d.push_back(&Selection_ccbar_OS_presence);
+  Extradist1d.push_back(&Selection_ccbar_after_presel);
+  
   //After Selection
   
   Extradist1d.push_back(&PostSelection_Tau3MuRelativeIsolation);
@@ -886,9 +885,11 @@ void  ZTau3MuTaumu::doEvent(){
   int Whether_decay_found(0);
   
   bool WhetherSignalMC = id==210||id==210231||id==210232||id==210233;
+  
   if(WhetherSignalMC){
   
   //int Whether_decay_found(0);
+  
   int TausFromZ_Count(0);
   int tau_3mu_idx(-1);
   int tau_mu_idx(-1);
@@ -1183,123 +1184,13 @@ void  ZTau3MuTaumu::doEvent(){
 
   //pass.at(TripletPT) = ( value.at(TripletPT) >= cut.at(TripletPT) );
   //  std::cout<<"   index  "<< signal_idx << "  id  "<< id << std::endl;
-
-  std::vector<int> Muons;
-  std::vector<int> Muons_OppositeHemisphere;
-  std::vector<int> Muons_OppositeHemisphere_PF_GL;
-  std::vector<int> Muons_OppositeHemisphere_pT;
-  std::vector<int> Muons_OppositeHemisphere_eta;
-  std::vector<int> Muons_OppositeHemisphere_dR;
-  std::vector<int> Muons_OppositeHemisphere_dz;
-  std::vector<std::vector<double>> Muons_OppositeHemisphere_OppositeCharge;
-
-
-
-
-  value.at(nMuons_PF_GL)  = -1;
-  value.at(nMuons_pT)  = -1;
-  value.at(nMuons_eta)  = 99.0;
-  value.at(nMuons_dR)  = -1;
-  value.at(nMuons_dz)  = 99.0;
-  
-  bool highest_PF_GL(0);//highest value determines whether it passes (when there are multiple muons)
-  double highest_pT(-1.0);
-  double lowest_eta(10.0);
-  double highest_dR(-1.0);
-  double lowest_dz(10.0);
-  
-  for(unsigned int imu=0; imu < Ntp->NMuons(); imu++)
-    {
-      if(signal_idx!=-1)
-	{
-           bool WhetherMuonDifferentFrom3Mu(true);
-           for (int i=0; i<3; i++){
-             TLorentzVector Muon_Temp_LV = Ntp->Muon_P4(Ntp->ThreeMuonIndices(signal_idx).at(i));
-             double dR_temp = Muon_Temp_LV.DeltaR(Ntp->Muon_P4(imu));
-             //std::cout<<"dR: "<< dR_temp << std::endl;
-             if(dR_temp<0.001){
-               WhetherMuonDifferentFrom3Mu=false;
-             }
-           }
-           
-           if(WhetherMuonDifferentFrom3Mu){
-                   
-                   //value.at(nMuons_PF_GL)  = Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu);
-                   //value.at(nMuons_pT)  = Ntp->Muon_P4(imu).Pt();
-                   //value.at(nMuons_eta)  = fabs(Ntp->Muon_P4(imu).Eta());
-                   //value.at(nMuons_dR)  = Ntp->Muon_P4(imu).DeltaR(Tau3MuLV);
-                   
-                   if(Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu) &&  Ntp->CHECK_BIT(Ntp->Muon_StandardSelection(imu),Ntp->MuonStandardSelectors::SoftCutBasedId)  ){
-                           highest_PF_GL=true;
-                           Muons_OppositeHemisphere_PF_GL.push_back(imu);
-                           
-                           if(Ntp->Muon_P4(imu).DeltaR(Tau3MuLV)>highest_dR){
-                             highest_dR=Ntp->Muon_P4(imu).DeltaR(Tau3MuLV);
-                           }
-                           
-                           if(Ntp->Muon_P4(imu).DeltaR(Tau3MuLV) > cut.at(nMuons_dR)  ){
-                                   Muons_OppositeHemisphere_dR.push_back(imu);
-                                   
-                                   if(Ntp->Muon_P4(imu).Pt() > highest_pT){
-                                     highest_pT=Ntp->Muon_P4(imu).Pt();
-                                   }
-                                   
-                                   if(Ntp->Muon_P4(imu).Pt() > cut.at(nMuons_pT)  ){
-                                           Muons_OppositeHemisphere_pT.push_back(imu);
-                                           
-                                           if(fabs(Ntp->Muon_P4(imu).Eta()) < lowest_eta){
-                                             lowest_eta=fabs(Ntp->Muon_P4(imu).Eta());
-                                           }
-                                           
-                                           if(fabs(Ntp->Muon_P4(imu).Eta()) < cut.at(nMuons_eta)  ){
-                                                   Muons_OppositeHemisphere_eta.push_back(imu);
-                                                   
-                                                   
-                                                   if(fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < lowest_dz ){
-                                                      lowest_dz = fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z());
-                                                   }
-                                                      
-                                                   if( fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < cut.at(nMuons_dz) ){
-                                                      Muons_OppositeHemisphere_dz.push_back(imu);
-                                                   }
-                                                   
-                                           }
-                                   }
-                           }
-                   }
-                   
-                   
-                   if(Ntp->Muon_P4(imu).Pt() > cut.at(nMuons_pT) && fabs(Ntp->Muon_P4(imu).Eta()) < cut.at(nMuons_eta) && Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu) &&  Ntp->CHECK_BIT(Ntp->Muon_StandardSelection(imu),Ntp->MuonStandardSelectors::SoftCutBasedId) &&
-                   Ntp->Muon_P4(imu).DeltaR(Tau3MuLV) > cut.at(nMuons_dR) && fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < cut.at(nMuons_dz)  )Muons_OppositeHemisphere.push_back(imu);
-                   
-                   
-           }
-                   
-           
-	}
-    }
-
-  
-  value.at(nMuons_PF_GL)  = highest_PF_GL;
-  value.at(nMuons_pT)  = highest_pT;
-  value.at(nMuons_eta)  = lowest_eta;
-  value.at(nMuons_dR)  = highest_dR;
-  value.at(nMuons_dz)  = lowest_dz;
   
   
-  Selection_Cut_muon_Pt.at(t).Fill(highest_pT);
-  Selection_Cut_muon_Eta.at(t).Fill(lowest_eta);
-  Selection_Cut_muon_DeltaR_3mu.at(t).Fill(highest_dR);
   
   
-  pass.at(nMuons_PF_GL) = ( Muons_OppositeHemisphere_PF_GL.size() > 0 );
-  pass.at(nMuons_pT)    = ( Muons_OppositeHemisphere_pT.size() > 0 );
-  pass.at(nMuons_eta)   = ( Muons_OppositeHemisphere_eta.size() > 0 );
-  pass.at(nMuons_dR)    = ( Muons_OppositeHemisphere_dR.size() > 0 );
-  pass.at(nMuons_dz)    = ( Muons_OppositeHemisphere_dz.size() > 0 );
-
-
-  value.at(OSCharge)        =  0;
+  
+  
+  
   //value.at(Tau3MuIsolation) = -1;
   //value.at(MuonIsolation)   = -1;
   //value.at(VisMass)         = -1;
@@ -1368,25 +1259,6 @@ void  ZTau3MuTaumu::doEvent(){
 	}
 
         value.at(TriggerMatch) = triggerCheck;      
-
-      
-	if( Muons_OppositeHemisphere.size()>0)
-	  {
-	    for(auto i : Muons_OppositeHemisphere)
-	      {
-		
-		int Tau3MuCharge = Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0)) +
-		  Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1)) +
-		  Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2));
-		
-		double OS_DelPhi = fabs(Ntp->Muon_P4(i).DeltaPhi(Tau3MuLV));
-                
-                if(Ntp->Muon_charge(i)*Tau3MuCharge == -1) Muons_OppositeHemisphere_OppositeCharge.push_back({OS_DelPhi,i});
-                
-	      }
-	    value.at(OSCharge) = Muons_OppositeHemisphere_OppositeCharge.size();
-	  }
-	
 	
     }
   
@@ -1394,7 +1266,132 @@ void  ZTau3MuTaumu::doEvent(){
     pass.at(TriggerMatch) = (value.at(TriggerMatch)  ==  cut.at(TriggerMatch));
     //    std::cout<<" (value.at(TriggerMatch)   " << value.at(TriggerMatch)  << " cut.at(TriggerMatch)   " << cut.at(TriggerMatch) << "  ??   " 
     //	     <<(value.at(TriggerMatch)  ==  cut.at(TriggerMatch) )<< std::endl;
-    pass.at(OSCharge) = (value.at(OSCharge) >= cut.at(OSCharge)); 
+    
+  
+  
+  
+  
+  
+
+  std::vector<int> Muons;
+  std::vector<int> Muons_OppositeHemisphere;
+  std::vector<int> Muons_OppositeHemisphere_PF_GL_pT_eta;
+  std::vector<int> Muons_OppositeHemisphere_pT;
+  std::vector<int> Muons_OppositeHemisphere_eta;
+  std::vector<int> Muons_OppositeHemisphere_dR;
+  std::vector<int> Muons_OppositeHemisphere_dz;
+  std::vector<int> Muons_OppositeHemisphere_OppositeCharge;
+  std::vector<std::vector<double>> Muons_OppositeHemisphere_Final;
+
+
+
+
+  double nMuons_PF_GL  = -1;
+  double nMuons_pT  = -1;
+  double nMuons_eta  = 99.0;
+  value.at(nMuons_dR)  = -1;
+  value.at(nMuons_dz)  = 99.0;
+  value.at(OSCharge)        =  0;
+  
+  bool highest_PF_GL(0);//highest value determines whether it passes (when there are multiple muons)
+  double highest_pT(-1.0);
+  double lowest_eta(10.0);
+  double highest_dR(-1.0);
+  double lowest_dz(10.0);
+  
+  for(unsigned int imu=0; imu < Ntp->NMuons(); imu++)
+    {
+      if(signal_idx!=-1)
+	{
+           bool WhetherMuonDifferentFrom3Mu(true);
+           for (int i=0; i<3; i++){
+             TLorentzVector Muon_Temp_LV = Ntp->Muon_P4(Ntp->ThreeMuonIndices(signal_idx).at(i));
+             double dR_temp = Muon_Temp_LV.DeltaR(Ntp->Muon_P4(imu));
+             //std::cout<<"dR: "<< dR_temp << std::endl;
+             if(dR_temp<0.001){
+               WhetherMuonDifferentFrom3Mu=false;
+             }
+           }
+           
+           if(WhetherMuonDifferentFrom3Mu){
+                   
+                   
+                   if(Ntp->Muon_P4(imu).Pt() > highest_pT){
+                           highest_pT=Ntp->Muon_P4(imu).Pt();
+                   }
+                   
+                   if(fabs(Ntp->Muon_P4(imu).Eta()) < lowest_eta){
+                           lowest_eta=fabs(Ntp->Muon_P4(imu).Eta());
+                   }
+                   
+                   if(Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu) &&  Ntp->CHECK_BIT(Ntp->Muon_StandardSelection(imu),Ntp->MuonStandardSelectors::SoftCutBasedId) && Ntp->Muon_P4(imu).Pt() > 3.0 && fabs(Ntp->Muon_P4(imu).Eta()) < 2.4 ){
+                   
+                           highest_PF_GL=true;
+                           Muons_OppositeHemisphere_PF_GL_pT_eta.push_back(imu);
+                           
+                           if(Ntp->Muon_P4(imu).DeltaR(Tau3MuLV)>highest_dR){
+                             highest_dR=Ntp->Muon_P4(imu).DeltaR(Tau3MuLV);
+                           }
+                           
+                           if(Ntp->Muon_P4(imu).DeltaR(Tau3MuLV) > cut.at(nMuons_dR)  ){
+                                   Muons_OppositeHemisphere_dR.push_back(imu);
+                                   
+                                   
+                                   int Tau3MuCharge = Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0)) +
+                                		  Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1)) +
+                                		  Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2));
+                                		
+                                   double OS_DelPhi = fabs(Ntp->Muon_P4(imu).DeltaPhi(Tau3MuLV));
+                                   if(Ntp->Muon_charge(imu)*Tau3MuCharge == -1){
+                                           //Muons_OppositeHemisphere_OppositeCharge.push_back({OS_DelPhi,i});
+                                           Muons_OppositeHemisphere_OppositeCharge.push_back(imu);
+                                           
+                                           
+                                           if(fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < lowest_dz ){
+                                              lowest_dz = fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z());
+                                           }
+                                              
+                                           if( fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < cut.at(nMuons_dz) ){
+                                              Muons_OppositeHemisphere_dz.push_back(imu);
+                                              Muons_OppositeHemisphere_Final.push_back({OS_DelPhi,imu});
+                                           }
+                                           
+                                   }
+                                   
+                           }
+                   }
+                   
+                   
+                   //if(Ntp->Muon_P4(imu).Pt() > cut.at(nMuons_pT) && fabs(Ntp->Muon_P4(imu).Eta()) < cut.at(nMuons_eta) && Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu) &&  Ntp->CHECK_BIT(Ntp->Muon_StandardSelection(imu),Ntp->MuonStandardSelectors::SoftCutBasedId) &&
+                   //Ntp->Muon_P4(imu).DeltaR(Tau3MuLV) > cut.at(nMuons_dR) && fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Muon_Poca(imu).Z()) < cut.at(nMuons_dz)  )Muons_OppositeHemisphere.push_back(imu);
+                   
+                   
+           }
+                   
+           
+	}
+    }
+
+  
+  value.at(nMuons_PF_GL_pT_eta)  = highest_PF_GL;
+  value.at(nMuons_dR)  = highest_dR;
+  value.at(nMuons_dz)  = lowest_dz;
+  
+  if(signal_idx!=-1)
+	  {
+          Selection_Cut_muon_Pt.at(t).Fill(highest_pT);
+          Selection_Cut_muon_Eta.at(t).Fill(lowest_eta);
+          Selection_Cut_muon_DeltaR_3mu.at(t).Fill(highest_dR);
+  }
+  
+  
+  pass.at(nMuons_PF_GL_pT_eta) = ( Muons_OppositeHemisphere_PF_GL_pT_eta.size() > 0 );
+  pass.at(nMuons_dR)    = ( Muons_OppositeHemisphere_dR.size() > 0 );
+  pass.at(nMuons_dz)    = ( Muons_OppositeHemisphere_dz.size() > 0 );
+  pass.at(OSCharge)    = ( Muons_OppositeHemisphere_OppositeCharge.size() > 0 );
+
+
+  
 
 
 
@@ -1404,9 +1401,9 @@ void  ZTau3MuTaumu::doEvent(){
     if(pass.at(OSCharge))
       {
       
-      for(unsigned int i = 0 ; i< Muons_OppositeHemisphere_OppositeCharge.size(); i++){
+      for(unsigned int i = 0 ; i< Muons_OppositeHemisphere_Final.size(); i++){
            
-           int muon_index = Muons_OppositeHemisphere_OppositeCharge[i][1];
+           int muon_index = Muons_OppositeHemisphere_Final[i][1];
            
            double MuonIsolation_val = (Ntp->Muon_RelIso(muon_index))/Ntp->Muon_P4(muon_index).Pt();
            double VisMass_val = (Tau3MuLV + Ntp->Muon_P4(muon_index)).M();
@@ -1473,15 +1470,73 @@ void  ZTau3MuTaumu::doEvent(){
   
 
   bool status=AnalysisCuts(t,w,wobs);
+  
+  if (id>180&&id<190){
+          
+          float maxMass = -1.0;
+          int heaviestIndex = -1;
+          float partPt = -1;
+          float actual_partonPt = -1;
+          
+          const std::unordered_set<int> targetPDGs = {511, 521, 513, 523, 531, 533, 541, 5122, 411, 421, 413, 423, 431, 433, 415, 10411};
+          
+          for (unsigned int imc = 0; imc < Ntp->NMCParticles(); ++imc) {
+                    int pdg = abs(Ntp->MCParticle_pdgid(imc));
+                    int stat = Ntp->MCParticle_status(imc);
+                
+                    //if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000) || (pdg >= 10400 && pdg < 10500) || (pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000) || (pdg >= 10500 && pdg < 10600) ) {
+                    if (targetPDGs.count(pdg)) {
+                        float mass = Ntp->MCParticle_p4(imc).M();
+                        if (mass > maxMass) {
+                            maxMass = mass;
+                            heaviestIndex = imc;
+                            partPt=Ntp->MCParticle_p4(imc).Pt();
+                        }
+                    }
+                    
+                    if ((pdg == 4 || pdg == 5) && (stat >= 21 && stat <= 29) ) {
+                            actual_partonPt = Ntp->MCParticle_p4(imc).Pt();
+                            //std::cout << "PDGID is:  " << pdg << " with pt: "<< actual_partonPt << std::endl;
+                    }
+          }
+          
+          
+          if(Ntp->getBBCCMCEventType()==10){
+                  Selection_bbbar_precut.at(t).Fill(actual_partonPt,1 );
+                  if(pass.at(TriggerMatch)){
+                          Selection_bbbar_HLT.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nMuons_PF_GL_pT_eta)){
+                          Selection_bbbar_OS_presence.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nMuons_dz)){
+                          Selection_bbbar_after_presel.at(t).Fill(actual_partonPt,1 );
+                  }
+          }
+          if(Ntp->getBBCCMCEventType()==20){
+                  Selection_ccbar_precut.at(t).Fill(actual_partonPt,1 );
+                  if(pass.at(TriggerMatch)){
+                          Selection_ccbar_HLT.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nMuons_PF_GL_pT_eta)){
+                          Selection_ccbar_OS_presence.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nMuons_dz)){
+                          Selection_ccbar_after_presel.at(t).Fill(actual_partonPt,1 );
+                  }
+          }
+          
+          
+  }
 
   if(status){ 
     
     //    std::cout<<"pass nMuons "<< pass.at(nMuons) <<    "  triplet pT    "<< pass.at(TripletPT)  << std::endl;
     //    std::cout<<"   how many muons i have  " << Muons_OppositeHemisphere_OppositeCharge .size() << std::endl;
-    sort( Muons_OppositeHemisphere_OppositeCharge.rbegin(), Muons_OppositeHemisphere_OppositeCharge.rend() ); // sort based on first column, highest first
-    unsigned int muon_idx = Muons_OppositeHemisphere_OppositeCharge[0][1];
+    sort( Muons_OppositeHemisphere_Final.rbegin(), Muons_OppositeHemisphere_Final.rend() ); // sort based on first column, highest first
+    unsigned int muon_idx = Muons_OppositeHemisphere_Final[0][1];
     
-    double val_Phi_To_Opposite_Side=Muons_OppositeHemisphere_OppositeCharge[0][0];
+    double val_Phi_To_Opposite_Side=Muons_OppositeHemisphere_Final[0][0];
     
     TLorentzVector MuLV = Ntp->Muon_P4(muon_idx);
     

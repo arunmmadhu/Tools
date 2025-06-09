@@ -319,8 +319,7 @@ void  ZTau3MuTauh::Configure(){
     if(i==DeepTauMuons)       cut.at(DeepTauMuons)=1;
     if(i==DeepTauElectrons)   cut.at(DeepTauElectrons)=1;
     if(i==OSCharge)           cut.at(OSCharge)=1;
-    if(i==nTaus_pT)           cut.at(nTaus_pT)=20.0;
-    if(i==nTaus_eta)          cut.at(nTaus_eta)=2.3;
+    if(i==nTaus_pT_eta)           cut.at(nTaus_pT_eta)=1;
     if(i==nTaus_dR)           cut.at(nTaus_dR)=0.5;
     if(i==nTaus_dz)           cut.at(nTaus_dz)=0.2;
     if(i==TriggerMatch)       cut.at(TriggerMatch)=1;
@@ -354,24 +353,16 @@ void  ZTau3MuTauh::Configure(){
       Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_WhetherZTTDecayFound_",htitle,2,-0.5,1.5,hlabel,"Events"));
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_WhetherZTTDecayFound_",htitle,2,-0.5,1.5,hlabel,"Events"));
     }
-    else if(i==nTaus_pT){
-      title.at(i)=" At least one $\\tau_{h}$, $pT>20.0 GeV$";
+    else if(i==nTaus_pT_eta){
+      title.at(i)=" At least one $\\tau_{h}$ with $pT>20.0 GeV$ and $|\\eta| < 2.3$";
       hlabel="pT, GeV";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
-      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nTaus_pT_",htitle,80,0.0,40,hlabel,"Events"));
-      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nTaus_pT_",htitle,80,0.0,40,hlabel,"Events"));
-    }
-    else if(i==nTaus_eta){
-      title.at(i)=" At least one $\\tau_{h}$, $|\\eta| < 2.3$";
-      hlabel="$|\\eta|$";
-      htitle.ReplaceAll("$","");
-      htitle.ReplaceAll("\\","#");
-      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nTaus_eta_",htitle,20,2.0,3.0,hlabel,"Events"));
-      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nTaus_eta_",htitle,20,2.0,3.0,hlabel,"Events"));
+      Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_nTaus_pT_eta_",htitle,80,0.0,40,hlabel,"Events"));
+      Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_nTaus_pT_eta_",htitle,80,0.0,40,hlabel,"Events"));
     }
     else if(i==nTaus_dR){
-      title.at(i)=" At least one $\\tau_{h}$, $\\Delta R (\\tau_{h}-3\\mu) <$ 0.5";
+      title.at(i)=" At least one $\\tau_{h}$ on opposite side with $\\Delta R (\\tau_{h}-3\\mu) >$ 0.5";
       hlabel="$\\Delta R (\\tau_{h}-3\\mu) $";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
@@ -396,7 +387,7 @@ void  ZTau3MuTauh::Configure(){
     }
 
     else if(i==DeepTauMuons){
-      title.at(i)="$\\tau_{h}$ pass DeepTauVsMuons (tight WP) ";
+      title.at(i)="At least one $\\tau_{h}$ pass DeepTauVsMuons (tight WP) ";
       hlabel=" deep tau muons";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
@@ -405,7 +396,7 @@ void  ZTau3MuTauh::Configure(){
     }
 
     else if(i==DeepTauElectrons){
-      title.at(i)="$\\tau_{h}$ pass DeepTauVsElectrons (loose WP) ";
+      title.at(i)="At least one $\\tau_{h}$ pass DeepTauVsElectrons (loose WP) ";
       hlabel=" deep tau electrons";
       htitle.ReplaceAll("$","");
       htitle.ReplaceAll("\\","#");
@@ -423,7 +414,7 @@ void  ZTau3MuTauh::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_SignalCandidate_",htitle,5,-0.5,4.5,hlabel,"Events"));
     }
     else if(i==HLT_reinforcements){
-      title.at(i)="HLT Reinforcements ($\\mu_{1,Pt}>$7.0, $\\mu_{2,Pt}>$1.0, $\\mu_{3,Pt}>$1.0, dR($\\mu_{i} , \\mu_{j}$)$<$0.5 for atleast one muon pair, Invariant Mass ($\\mu_{i} , \\mu_{j}$)$<$1.9 for atleast one muon pair, $\\tau_{3\\mu,Pt}>$15.0, $\\tau_{3\\mu,\\eta}<$2.5";
+      title.at(i)="HLT Reinforcements ($\\mu_{1,Pt}>$7.0, $\\mu_{2,Pt}>$1.0, $\\mu_{3,Pt}>$1.0, dR($\\mu_{i} , \\mu_{j}$)$<$0.5 for atleast one muon pair, invariant Mass ($\\mu_{i} , \\mu_{j}$)$<$1.9 for atleast one muon pair, $\\tau_{3\\mu,Pt}>$15.0, $\\tau_{3\\mu,\\eta}<$2.5";
       htitle=title.at(i);
       hlabel="HLT Reinforcements";
       htitle.ReplaceAll("$","");
@@ -432,7 +423,7 @@ void  ZTau3MuTauh::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_HLT_reinforcements_",htitle,2,-0.5,1.5,hlabel,"Events"));
     }
     else if(i==OSCharge){
-      title.at(i)="Charge $\\tau_{h}$ * $\\tau_{3\\mu}$ =  -1; ";
+      title.at(i)="Charge $\\tau_{h}$ * $\\tau_{3\\mu}$ =  -1 (at least one such $\\tau_{h}$) ";
       title.at(i)+=" (at least one)";
       htitle=title.at(i);
       hlabel="Opposite charge? ";
@@ -442,7 +433,7 @@ void  ZTau3MuTauh::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_OSCharge_",htitle,4,-0.5,3.5,hlabel,"Events"));
     }
     else if(i==TriggerMatch){
-      title.at(i)="Selected (by closest to hltTau3MuIsoFilterCharge1) 3$\\mu$ matched to trg";
+      title.at(i)=" 3$\\mu$ trigger matched (by closest to hltTau3MuIsoFilterCharge1)";
       hlabel="Trigger Matched ";
       Nminus1.push_back(HConfig.GetTH1D(Name+c+"_Nminus1_TriggerMatch_",htitle,2,-0.5,1.5,hlabel,"Events"));
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_TriggerMatch_",htitle,2,-0.5,1.5,hlabel,"Events"));
@@ -502,6 +493,16 @@ void  ZTau3MuTauh::Configure(){
   Selection_Cut_RecoH_Eta=HConfig.GetTH1D(Name+"_Selection_Cut_RecoH_Eta","Selection_Cut_RecoH_Eta",50,2,3.0,"|#eta|","Events");
   
   Selection_TripletMass=HConfig.GetTH1D(Name+"_Selection_TripletMass","Selection_TripletMass",40,1.4,2.1,"M_{3#mu}, GeV","Events");
+  
+  Selection_bbbar_precut=HConfig.GetTH1D(Name+"_Selection_bbbar_precut","Selection_bbbar_precut",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_HLT=HConfig.GetTH1D(Name+"_Selection_bbbar_HLT","Selection_bbbar_HLT",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_OS_presence=HConfig.GetTH1D(Name+"_Selection_bbbar_OS_presence","Selection_bbbar_OS_presence",100,-0.5,99.5,"p_{T}","Events");
+  Selection_bbbar_after_presel=HConfig.GetTH1D(Name+"_Selection_bbbar_after_presel","Selection_bbbar_after_presel",100,-0.5,99.5,"p_{T}","Events");
+  
+  Selection_ccbar_precut=HConfig.GetTH1D(Name+"_Selection_ccbar_precut","Selection_ccbar_precut",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_HLT=HConfig.GetTH1D(Name+"_Selection_ccbar_HLT","Selection_ccbar_HLT",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_OS_presence=HConfig.GetTH1D(Name+"_Selection_ccbar_OS_presence","Selection_ccbar_OS_presence",100,-0.5,99.5,"p_{T}","Events");
+  Selection_ccbar_after_presel=HConfig.GetTH1D(Name+"_Selection_ccbar_after_presel","Selection_ccbar_after_presel",100,-0.5,99.5,"p_{T}","Events");
   
   //Plots after Selection
   
@@ -888,6 +889,15 @@ void  ZTau3MuTauh::Store_ExtraDist(){
   
   Extradist1d.push_back(&Selection_TripletMass);
   
+  Extradist1d.push_back(&Selection_bbbar_precut);
+  Extradist1d.push_back(&Selection_bbbar_HLT);
+  Extradist1d.push_back(&Selection_bbbar_OS_presence);
+  Extradist1d.push_back(&Selection_bbbar_after_presel);
+  Extradist1d.push_back(&Selection_ccbar_precut);
+  Extradist1d.push_back(&Selection_ccbar_HLT);
+  Extradist1d.push_back(&Selection_ccbar_OS_presence);
+  Extradist1d.push_back(&Selection_ccbar_after_presel);
+  
   
   // CatA
   Extradist1d.push_back(&PostSelection_A_NumberOfTaus);
@@ -1143,6 +1153,39 @@ void  ZTau3MuTauh::doEvent(){
   unsigned int t;
   int id(Ntp->GetMCID());
   if(!HConfig.GetHisto(Ntp->isData(),id,t)){ Logger(Logger::Error) << "failed to find id" <<std::endl; return;}
+  
+  
+  if (id>180&&id<190){
+          
+          float maxMass = -1.0;
+          int heaviestIndex = -1;
+          float partPt = -1;
+          float actual_partonPt = -1;
+          
+          const std::unordered_set<int> targetPDGs = {511, 521, 513, 523, 531, 533, 541, 5122, 411, 421, 413, 423, 431, 433, 415, 10411};
+          
+          for (unsigned int imc = 0; imc < Ntp->NMCParticles(); ++imc) {
+                    int pdg = abs(Ntp->MCParticle_pdgid(imc));
+                    int stat = Ntp->MCParticle_status(imc);
+                
+                    //if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000) || (pdg >= 10400 && pdg < 10500) || (pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000) || (pdg >= 10500 && pdg < 10600) ) {
+                    if (targetPDGs.count(pdg)) {
+                        float mass = Ntp->MCParticle_p4(imc).M();
+                        if (mass > maxMass) {
+                            maxMass = mass;
+                            heaviestIndex = imc;
+                            partPt=Ntp->MCParticle_p4(imc).Pt();
+                        }
+                    }
+                    
+                    if ((pdg == 4 || pdg == 5) && (stat >= 21 && stat <= 29) ) {
+                            actual_partonPt = Ntp->MCParticle_p4(imc).Pt();
+                            //std::cout << "PDGID is:  " << pdg << " with pt: "<< actual_partonPt << std::endl;
+                    }
+          }
+          
+  }
+  
   // Apply Selection
   
   
@@ -1538,107 +1581,15 @@ void  ZTau3MuTauh::doEvent(){
   
   //pass.at(TripletPT) = (value.at(TripletPT) >= cut.at(TripletPT));
   
-
-
-
-  //  std::cout << "Test 4. " << std::endl;
-  std::vector<int> Taus;
-  std::vector<int> Taus_OppositeHemisphere_pT;
-  std::vector<int> Taus_OppositeHemisphere_eta;
-  std::vector<int> Taus_OppositeHemisphere_dR;
-  std::vector<int> Taus_OppositeHemisphere_dz;
-  std::vector<int> Taus_OppositeHemisphere;
-  std::vector<int> Taus_OppositeHemisphere_OppositeCharge;
-  std::vector<int> Taus_DeepTauJetsMedium;
-  std::vector<int> Taus_DeepTauJetsTight;
-  std::vector<int> Taus_DeepTauJetsLoose;
-
-
-
-  value.at(nTaus_pT)  = -1;
-  value.at(nTaus_eta)  = 99.0;
-  value.at(nTaus_dR)  = -1;
-  value.at(nTaus_dz)  = 99.0;
   
-  double highest_pT(-1.0);//highest value determines whether it passes (when there are multiple taus)
-  double lowest_eta(10.0);
-  double highest_dR(-1.0);
-  double lowest_dz(10.0);
   
-  for(unsigned int itau=0; itau < Ntp->NTaus(); itau++)
-    {
-      if(signal_idx!=-1)
-	{
-	  if(Ntp->Tau_P4(itau).DeltaR(Tau3MuLV)>highest_dR){
-            highest_dR=Ntp->Tau_P4(itau).DeltaR(Tau3MuLV);
-          }
-          
-          if(Ntp->Tau_P4(itau).DeltaR(Tau3MuLV) > cut.at(nTaus_dR) ){
-                  Taus_OppositeHemisphere_dR.push_back(itau);
-                  
-                  if(Ntp->Tau_P4(itau).Pt() > highest_pT){
-                    highest_pT=Ntp->Tau_P4(itau).Pt();
-                  }
-                  
-                  if(Ntp->Tau_P4(itau).Pt() > cut.at(nTaus_pT) ){
-                          Taus_OppositeHemisphere_pT.push_back(itau);
-                          
-                          if(fabs(Ntp->Tau_P4(itau).Eta()) < lowest_eta){
-                            lowest_eta=fabs(Ntp->Tau_P4(itau).Eta());
-                          }
-                          
-                          if(fabs(Ntp->Tau_P4(itau).Eta()) < cut.at(nTaus_eta) ){
-                            Taus_OppositeHemisphere_eta.push_back(itau);
-                            
-                            if(fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < lowest_dz ){
-                              lowest_dz = fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z());
-                            }
-                              
-                            if( fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < cut.at(nTaus_dz) ){
-                              Taus_OppositeHemisphere_dz.push_back(itau);
-                            }
-                            
-                            
-                          }
-                  }
-          }
-          
-          
-          if(Ntp->Tau_P4(itau).Pt() > cut.at(nTaus_pT) && fabs(Ntp->Tau_P4(itau).Eta()) < cut.at(nTaus_eta) && 
-	     Ntp->Tau_P4(itau).DeltaR(Tau3MuLV) > cut.at(nTaus_dR) && fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < cut.at(nTaus_dz) ) Taus_OppositeHemisphere.push_back(itau);
-	  
-      
-	}
-    }
-
-  value.at(nTaus_pT)  = highest_pT;
-  value.at(nTaus_eta)  = lowest_eta;
-  value.at(nTaus_dR)  = highest_dR;
-  value.at(nTaus_dz)  = lowest_dz;
   
-  Selection_Cut_tauh_Pt.at(t).Fill(highest_pT);
-  Selection_Cut_tauh_Eta.at(t).Fill(lowest_eta);
-  Selection_Cut_tauh_DeltaR_3mu.at(t).Fill(highest_dR);
-  
-  pass.at(nTaus_pT)  = ( Taus_OppositeHemisphere_pT.size() > 0 );
-  
-  pass.at(nTaus_eta) = ( Taus_OppositeHemisphere_eta.size() > 0 );
-  
-  pass.at(nTaus_dR)  = ( Taus_OppositeHemisphere_dR.size() > 0 );
-  
-  pass.at(nTaus_dz)  = ( Taus_OppositeHemisphere_dz.size() > 0 );
-  
-  //  std::cout << "Test 5. " << std::endl;
-
-
-  value.at(OSCharge)    =0;
   //value.at(Tau3MuIsolation)   = -1;
   //value.at(VisMass)           = -1;
   value.at(TriggerMatch) = 0;
   value.at(HLT_reinforcements) = 0;
 
 
-  //  std::cout << "Test 6. " << std::endl;
   if(signal_idx!=-1)
     {
       int index_mu_1 = Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0);
@@ -1650,13 +1601,6 @@ void  ZTau3MuTauh::doEvent(){
       TLorentzVector mu1_lv = Ntp->Muon_P4(index_mu_1);
       TLorentzVector mu2_lv = Ntp->Muon_P4(index_mu_2);
       TLorentzVector mu3_lv = Ntp->Muon_P4(index_mu_3);
-
-      //value.at(Tau3MuIsolation) =    (Ntp->Muon_RelIso(index_mu_1) +
-      //                                Ntp->Muon_RelIso(index_mu_2) +
-      //                                Ntp->Muon_RelIso(index_mu_3) )/TripletmuLV.Pt();
-                                                                                       
-      
-      //Selection_Cut_3mu_Rel_Iso.at(t).Fill(value.at(Tau3MuIsolation));
       
       //HLT Reinforcement
       
@@ -1706,28 +1650,124 @@ void  ZTau3MuTauh::doEvent(){
         }
       value.at(TriggerMatch) = triggerCheck;
     
-      if(Taus_OppositeHemisphere.size()>0)
-	{
-	  for(auto i : Taus_OppositeHemisphere)
-	    {
-	      
-	      int Tau3MuCharge = Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0)) +
-		Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1)) +
-		Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2));
-	      if(Ntp->Tau_charge(i)*Tau3MuCharge == -1) Taus_OppositeHemisphere_OppositeCharge.push_back(i);
-	    }
-	  value.at(OSCharge) = Taus_OppositeHemisphere_OppositeCharge.size();
-	}
+      
     }
     
   //    std::cout << "Test 7. " << std::endl;
     pass.at(HLT_reinforcements) = (value.at(HLT_reinforcements)  ==  cut.at(HLT_reinforcements)); 
     pass.at(TriggerMatch) = (value.at(TriggerMatch)  ==  cut.at(TriggerMatch));    
-    pass.at(OSCharge) = (value.at(OSCharge) >= cut.at(OSCharge));  
+    
+  
+  
+
+
+
+  //  std::cout << "Test 4. " << std::endl;
+  std::vector<int> Taus;
+  std::vector<int> Taus_OppositeHemisphere_pT_eta;
+  std::vector<int> Taus_OppositeHemisphere_eta;
+  std::vector<int> Taus_OppositeHemisphere_dR;
+  std::vector<int> Taus_OppositeHemisphere_dz;
+  std::vector<int> Taus_OppositeHemisphere;
+  std::vector<int> Taus_OppositeHemisphere_OppositeCharge;
+  std::vector<int> Taus_DeepTauJetsMedium;
+  std::vector<int> Taus_DeepTauJetsTight;
+  std::vector<int> Taus_DeepTauJetsLoose;
+
+
+
+  double nTaus_pT  = -1;
+  double nTaus_eta  = 99.0;
+  value.at(nTaus_dR)  = -1;
+  value.at(nTaus_dz)  = 99.0;
+  value.at(OSCharge)    =0;
+  
+  double highest_pT(-1.0);//highest value determines whether it passes (when there are multiple taus)
+  double lowest_eta(10.0);
+  double highest_dR(-1.0);
+  double lowest_dz(10.0);
+  
+  for(unsigned int itau=0; itau < Ntp->NTaus(); itau++)
+    {
+      if(signal_idx!=-1)
+	{
+	  
+          if(Ntp->Tau_P4(itau).Pt() > highest_pT){
+                  highest_pT=Ntp->Tau_P4(itau).Pt();
+          }
+          if(fabs(Ntp->Tau_P4(itau).Eta()) < lowest_eta){
+                  lowest_eta=fabs(Ntp->Tau_P4(itau).Eta());
+          }
+          
+          
+          if(Ntp->Tau_P4(itau).Pt() > 20.0 && fabs(Ntp->Tau_P4(itau).Eta()) < 2.3){
+          
+                  Taus_OppositeHemisphere_pT_eta.push_back(itau);
+                  
+                  if(Ntp->Tau_P4(itau).DeltaR(Tau3MuLV)>highest_dR){
+                  
+                          highest_dR=Ntp->Tau_P4(itau).DeltaR(Tau3MuLV);
+                  
+                  }
+                  
+                  if(Ntp->Tau_P4(itau).DeltaR(Tau3MuLV) > cut.at(nTaus_dR) ){
+                  
+                          Taus_OppositeHemisphere_dR.push_back(itau);
+                          
+                          
+                          
+                          int Tau3MuCharge = Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(0)) +
+                        		Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(1)) +
+                        		Ntp->Muon_charge(Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(signal_idx)).at(2));
+                          
+                          if(Ntp->Tau_charge(itau)*Tau3MuCharge == -1){
+                                  Taus_OppositeHemisphere_OppositeCharge.push_back(itau);
+                                  
+                                  if(fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < lowest_dz ){
+                                          lowest_dz = fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z());
+                                  }
+                                  
+                                  if( fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < cut.at(nTaus_dz) ){
+                                          Taus_OppositeHemisphere_dz.push_back(itau);
+                                  }
+                          }
+                  
+                  }
+          //if(Ntp->Tau_P4(itau).Pt() > cut.at(nTaus_pT) && fabs(Ntp->Tau_P4(itau).Eta()) < cut.at(nTaus_eta) && 
+	  //   Ntp->Tau_P4(itau).DeltaR(Tau3MuLV) > cut.at(nTaus_dR) && fabs(Ntp->Vertex_HighestPt_PrimaryVertex().z()-Ntp->Tau_Poca(itau).Z()) < cut.at(nTaus_dz) ) Taus_OppositeHemisphere_OppositeCharge.push_back(itau);
+           
+           
+          }
+	  
+      
+	}
+    }
+    
+  value.at(nTaus_dR)  = highest_dR;
+  value.at(nTaus_dz)  = lowest_dz;
+  
+  
+  
+  if(signal_idx!=-1)
+	  {
+          Selection_Cut_tauh_Pt.at(t).Fill(highest_pT);
+          Selection_Cut_tauh_Eta.at(t).Fill(lowest_eta);
+          Selection_Cut_tauh_DeltaR_3mu.at(t).Fill(highest_dR);
+          }
+  
+  
+  pass.at(nTaus_pT_eta)  = ( Taus_OppositeHemisphere_pT_eta.size() > 0 );
+  pass.at(nTaus_dR)  = ( Taus_OppositeHemisphere_dR.size() > 0 );
+  pass.at(nTaus_dz)  = ( Taus_OppositeHemisphere_dz.size() > 0 );
+  pass.at(OSCharge)  = ( Taus_OppositeHemisphere_OppositeCharge.size() > 0 );
+  //  std::cout << "Test 5. " << std::endl;
+
+
+   
     
 
 
-  for(auto i : Taus_OppositeHemisphere_OppositeCharge)
+  for(auto i : Taus_OppositeHemisphere_dz)
     {
       //if(Ntp->Tau_byLooseDeepTau2017v2p1VSjet(i)&&Ntp->Tau_byLooseCombinedIsolationDeltaBetaCorr3Hits(i))  Taus_DeepTauJetsLoose.push_back(i);
       //if(Ntp->Tau_byMediumDeepTau2017v2p1VSjet(i)&&Ntp->Tau_byMediumCombinedIsolationDeltaBetaCorr3Hits(i)) Taus_DeepTauJetsMedium.push_back(i);
@@ -1854,6 +1894,67 @@ void  ZTau3MuTauh::doEvent(){
   bool presel_cuts_tau;
   
   bool status=AnalysisCuts(t,w,wobs);
+  
+  
+  if (id>180&&id<190){
+          
+          float maxMass = -1.0;
+          int heaviestIndex = -1;
+          float partPt = -1;
+          float actual_partonPt = -1;
+          
+          const std::unordered_set<int> targetPDGs = {511, 521, 513, 523, 531, 533, 541, 5122, 411, 421, 413, 423, 431, 433, 415, 10411};
+          
+          for (unsigned int imc = 0; imc < Ntp->NMCParticles(); ++imc) {
+                    int pdg = abs(Ntp->MCParticle_pdgid(imc));
+                    int stat = Ntp->MCParticle_status(imc);
+                
+                    //if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000) || (pdg >= 10400 && pdg < 10500) || (pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000) || (pdg >= 10500 && pdg < 10600) ) {
+                    if (targetPDGs.count(pdg)) {
+                        float mass = Ntp->MCParticle_p4(imc).M();
+                        if (mass > maxMass) {
+                            maxMass = mass;
+                            heaviestIndex = imc;
+                            partPt=Ntp->MCParticle_p4(imc).Pt();
+                        }
+                    }
+                    
+                    if ((pdg == 4 || pdg == 5) && (stat >= 21 && stat <= 29) ) {
+                            actual_partonPt = Ntp->MCParticle_p4(imc).Pt();
+                            //std::cout << "PDGID is:  " << pdg << " with pt: "<< actual_partonPt << std::endl;
+                    }
+          }
+          
+          
+          if(Ntp->getBBCCMCEventType()==10){
+                  Selection_bbbar_precut.at(t).Fill(actual_partonPt,1 );
+                  if(pass.at(TriggerMatch)){
+                          Selection_bbbar_HLT.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nTaus_pT_eta)){
+                          Selection_bbbar_OS_presence.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(DeepTauElectrons)){
+                          Selection_bbbar_after_presel.at(t).Fill(actual_partonPt,1 );
+                  }
+          }
+          if(Ntp->getBBCCMCEventType()==20){
+                  Selection_ccbar_precut.at(t).Fill(actual_partonPt,1 );
+                  if(pass.at(TriggerMatch)){
+                          Selection_ccbar_HLT.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(nTaus_pT_eta)){
+                          Selection_ccbar_OS_presence.at(t).Fill(actual_partonPt,1 );
+                  }
+                  if(pass.at(DeepTauElectrons)){
+                          Selection_ccbar_after_presel.at(t).Fill(actual_partonPt,1 );
+                  }
+          }
+          
+          
+  }
+  
+  
 
   if(status){ 
     

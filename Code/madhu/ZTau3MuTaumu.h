@@ -39,12 +39,10 @@ class ZTau3MuTaumu : public Selection {
 	     SignalCandidate,
 	     HLT_reinforcements,
 	     TriggerMatch,
-	     nMuons_PF_GL,
+	     nMuons_PF_GL_pT_eta,
              nMuons_dR,
-             nMuons_pT,
-             nMuons_eta,
+             OSCharge,
              nMuons_dz,
-	     OSCharge,
 	     NCuts};
 
 
@@ -110,6 +108,16 @@ class ZTau3MuTaumu : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoMu_Eta;
   
   std::vector<TH1D>   Selection_TripletMass;
+  
+  std::vector<TH1D>   Selection_bbbar_precut;
+  std::vector<TH1D>   Selection_bbbar_HLT;
+  std::vector<TH1D>   Selection_bbbar_OS_presence;
+  std::vector<TH1D>   Selection_bbbar_after_presel;
+  
+  std::vector<TH1D>   Selection_ccbar_precut;
+  std::vector<TH1D>   Selection_ccbar_HLT;
+  std::vector<TH1D>   Selection_ccbar_OS_presence;
+  std::vector<TH1D>   Selection_ccbar_after_presel;
   
   //After Selection
   

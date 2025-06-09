@@ -108,6 +108,18 @@ class ZTau3MuTauh_Skimmer : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoH_Pt;
   std::vector<TH1D>   Selection_Cut_RecoH_Eta;
   
+  std::vector<TH1D>   Selection_bb_nStop_Distribution;
+  std::vector<TH1D>   Selection_cc_nStop_Distribution;
+  
+  std::vector<TH2D>   Selection_bb_nStop_2D_Distribution;
+  std::vector<TH2D>   Selection_cc_nStop_2D_Distribution;
+  
+  std::vector<TH1D>   Selection_TypeA_bbbar;
+  std::vector<TH1D>   Selection_TypeB_bbbar;
+  
+  std::vector<TH1D>   Selection_TypeA_ccbar;
+  std::vector<TH1D>   Selection_TypeB_ccbar;
+  
   Double_t m3m;
   Double_t dataMCtype;
   Double_t event_weight;
@@ -122,6 +134,11 @@ class ZTau3MuTauh_Skimmer : public Selection {
   Double_t var_mu1_pT;
   Double_t var_mu2_pT;
   Double_t var_mu3_pT;
+  
+  Double_t hadron_pt;
+  Double_t hadron_nStop;
+  Double_t hadron_type;
+  Double_t parton_pt;
   
   TTree *T3MMiniTree;
   TFile *T3MFMiniTree;

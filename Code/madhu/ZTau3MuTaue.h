@@ -37,12 +37,10 @@ class ZTau3MuTaue : public Selection {
 	     SignalCandidate,
 	     HLT_reinforcements,
 	     TriggerMatch,
-	     nElectrons_PF_cut,
+	     nElectrons_PF_cut_pT_eta,
              nElectrons_dR,
-             nElectrons_pT,
-             nElectrons_eta,
+             OSCharge,
              nElectrons_dz,
-	     OSCharge,
 	     NCuts}; 
 
  protected:
@@ -109,6 +107,16 @@ class ZTau3MuTaue : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoEl_Eta;
   
   std::vector<TH1D>   Selection_TripletMass;
+  
+  std::vector<TH1D>   Selection_bbbar_precut;
+  std::vector<TH1D>   Selection_bbbar_HLT;
+  std::vector<TH1D>   Selection_bbbar_OS_presence;
+  std::vector<TH1D>   Selection_bbbar_after_presel;
+  
+  std::vector<TH1D>   Selection_ccbar_precut;
+  std::vector<TH1D>   Selection_ccbar_HLT;
+  std::vector<TH1D>   Selection_ccbar_OS_presence;
+  std::vector<TH1D>   Selection_ccbar_after_presel;
   
   std::vector<TH1D>   Electron_Isolation_relative;
   std::vector<TH1D>   Electron_Isolation_trackIso;
