@@ -23,6 +23,7 @@
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
 #include "EventClassifier.h"
+#include "AnalysisRegistry.h"
 
 
 class ZTau3MuTauh : public Selection {
@@ -34,9 +35,11 @@ class ZTau3MuTauh : public Selection {
   virtual void  Configure();
   virtual void  Finish();
   
-  enum cuts {L1_TriggerOk=0,
+  enum cuts {WhetherZTTDecayFound=0,
+	     L1_TriggerOk,
 	     HLT_TriggerOk,
 	     SignalCandidate,
+	     MoreSignalCandidateCuts,
 	     HLT_reinforcements,
 	     TriggerMatch,
              nTaus_pT_eta,
@@ -46,6 +49,8 @@ class ZTau3MuTauh : public Selection {
 	     DeepTauJets,
 	     DeepTauMuons,
 	     DeepTauElectrons,
+	     PairMassVeto,
+	     FLSignificanceCut,
 	     NCuts}; 
 
  protected:
@@ -83,6 +88,9 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   Selection_Cut_PairMass_OppositeSign_dR13;
   std::vector<TH1D>   Selection_Cut_DeltaR_SameSignMuons;
   std::vector<TH1D>   Selection_Cut_SV_PV_FL_Significance_After_Preselections;
+  
+  std::vector<TH1D>   Selection_Cut_SV_PV_DeltaR;
+  std::vector<TH1D>   Selection_Cut_SV_BS_DeltaR;
   
   std::vector<TH1D>   Selection_Cut_3mu_Pt;
   std::vector<TH1D>   Selection_Cut_3mu_Rel_Iso;

@@ -20,6 +20,7 @@
 #include "TMVA/Tools.h"
 #include "TMVA/Reader.h"
 #include "TMVA/MethodCuts.h"
+#include "AnalysisRegistry.h"
 
 
 class ZTau3MuTaue : public Selection {
@@ -31,15 +32,20 @@ class ZTau3MuTaue : public Selection {
   virtual void  Configure();
   virtual void  Finish();
   
-  enum cuts {L1_TriggerOk=0,
+  enum cuts {WhetherZTTDecayFound=0,
+	     L1_TriggerOk,
 	     HLT_TriggerOk,
 	     SignalCandidate,
+	     MoreSignalCandidateCuts,
 	     HLT_reinforcements,
 	     TriggerMatch,
 	     nElectrons_PF_cut_pT_eta,
              nElectrons_dR,
              OSCharge,
              nElectrons_dz,
+	     PairMassVeto,
+	     FLSignificanceCut,
+             VetoOtherEvents,
 	     NCuts}; 
 
  protected:

@@ -29,6 +29,7 @@
 #include "DoubleEventRemoval.h"
 #include "Parameters.h"
 #include "Plots.h"
+#include "AnalysisRegistry.h"
 
 using namespace std;
 
@@ -128,6 +129,8 @@ int main() {
 		for (unsigned int j = 0; j < Analysis.size(); j++) {
 			Logger(Logger::Info) << "Configuring Selection " << Analysis.at(j) << endl;
 			selections.push_back(SF.Factory(Analysis.at(j), UncertType.at(i), mode, runtype, Lumi));
+			// Register analysis selection by name (e.g. "ZTau3MuTauh", etc.)
+                        AnalysisRegistry::instance().registerAnalysis(Analysis.at(j).Data(), selections.back());
 		}
 	}
 	Logger(Logger::Info) << "Selection modules Setup NSelection= " << selections.size() << endl;
