@@ -38,7 +38,9 @@ class ZTau3MuTaumu : public Selection {
 	     L1_TriggerOk,
 	     HLT_TriggerOk,
 	     SignalCandidate,
-	     MoreSignalCandidateCuts,
+	     MoreSignalCandidateCuts_1,
+             MoreSignalCandidateCuts_2,
+             MoreSignalCandidateCuts_3,
 	     HLT_reinforcements,
 	     TriggerMatch,
 	     nMuons_PF_GL_pT_eta,
@@ -46,7 +48,6 @@ class ZTau3MuTaumu : public Selection {
              OSCharge,
              nMuons_dz,
 	     PairMassVeto,
-	     FLSignificanceCut,
              VetoOtherEvents,
 	     NCuts};
 

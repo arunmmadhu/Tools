@@ -36,7 +36,9 @@ class ZTau3MuTaue : public Selection {
 	     L1_TriggerOk,
 	     HLT_TriggerOk,
 	     SignalCandidate,
-	     MoreSignalCandidateCuts,
+	     MoreSignalCandidateCuts_1,
+             MoreSignalCandidateCuts_2,
+             MoreSignalCandidateCuts_3,
 	     HLT_reinforcements,
 	     TriggerMatch,
 	     nElectrons_PF_cut_pT_eta,
@@ -44,8 +46,6 @@ class ZTau3MuTaue : public Selection {
              OSCharge,
              nElectrons_dz,
 	     PairMassVeto,
-	     FLSignificanceCut,
-             VetoOtherEvents,
 	     NCuts}; 
 
  protected:

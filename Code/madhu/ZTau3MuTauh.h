@@ -39,18 +39,20 @@ class ZTau3MuTauh : public Selection {
 	     L1_TriggerOk,
 	     HLT_TriggerOk,
 	     SignalCandidate,
-	     MoreSignalCandidateCuts,
+	     MoreSignalCandidateCuts_1,
+             MoreSignalCandidateCuts_2,
+             MoreSignalCandidateCuts_3,
 	     HLT_reinforcements,
 	     TriggerMatch,
              nTaus_pT_eta,
+             DeepTauJets,
+	     DeepTauMuons,
+	     DeepTauElectrons,
              nTaus_dR,
              OSCharge,
 	     nTaus_dz,
-	     DeepTauJets,
-	     DeepTauMuons,
-	     DeepTauElectrons,
 	     PairMassVeto,
-	     FLSignificanceCut,
+             VetoOtherEvents,
 	     NCuts}; 
 
  protected:
@@ -98,6 +100,19 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   Selection_Cut_tauh_Eta;
   std::vector<TH1D>   Selection_Cut_tauh_DeltaR_3mu;
   std::vector<TH1D>   Selection_Cut_Vis_InvM;
+  
+  std::vector<TH1D>   Selection_Cut_PreCandidate_TripletMass;
+  std::vector<TH1D>   Selection_Cut_PostCandidate_TripletMass;
+  
+  std::vector<TH1D>   Selection_Cut_PreCandidate_PF_GL_mu1;
+  std::vector<TH1D>   Selection_Cut_PostCandidate_PF_GL_mu1;
+  std::vector<TH1D>   Selection_Cut_PreCandidate_PF_GL_mu2;
+  std::vector<TH1D>   Selection_Cut_PostCandidate_PF_GL_mu2;
+  std::vector<TH1D>   Selection_Cut_PreCandidate_PF_GL_mu3;
+  std::vector<TH1D>   Selection_Cut_PostCandidate_PF_GL_mu3;
+  
+  std::vector<TH1D>   Selection_Cut_PreDeepTau_DeltaR;
+  std::vector<TH1D>   Selection_Cut_PostDeepTau_DeltaR;
 
   std::vector<TH1D>   Selection_Cut_Mu1_dR;
   std::vector<TH1D>   Selection_Cut_Mu1_dR_large_scale;

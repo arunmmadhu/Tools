@@ -34,10 +34,12 @@ class ZTauTau : public Selection {
   enum cuts {L1_TriggerOk=0,
 	     HLT_TriggerOk,
 	     SignalCandidate,
+	     MoreSignalCandidateCuts_1,
+             MoreSignalCandidateCuts_2,
+             MoreSignalCandidateCuts_3,
 	     HLT_reinforcements,
 	     TriggerMatch,
-	     TripletPT,
-	     Tau3MuIsolation,
+	     PairMassVeto,
 	     NCuts}; 
 
  protected:
@@ -69,6 +71,9 @@ class ZTauTau : public Selection {
   std::vector<TH1D>   dR_betweenTruth_Tau;
   std::vector<TH1D>   Z_Pt;
   std::vector<TH2D>   OS_vs_3mu_trigger;
+  
+  std::vector<TH1D>   Selection_Cut_PairMass_OppositeSign_dR12;
+  std::vector<TH1D>   Selection_Cut_PairMass_OppositeSign_dR13;
   
   std::vector<TH1D>   Selection_Cut_3mu_Pt;
   std::vector<TH1D>   Selection_Cut_3mu_Rel_Iso;
