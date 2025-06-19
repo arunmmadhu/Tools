@@ -1,9 +1,10 @@
 Thin: False
 Skim: False
 HistoFile: InputData/Histo_ZTauTau.txt
-Analysis: ZTau3MuTauh
 Analysis: ZTau3MuTaue
 Analysis: ZTau3MuTaumu
+Analysis: ZTau3MuTauh
+Analysis: ZTauTau
 UncertType: default
 SkimInfo: InputData/SkimSummary_ZTauTau.log
 Lumi: 59830
