@@ -248,6 +248,9 @@ int Ntuple_Controller::getBBCCMCEventType(){
         if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
                 
                 
+                
+                
+                
                 //std::cout << "Checking the event decay type.. "<<endl;
                 
                 bool IsFromCDecay = false;
@@ -305,17 +308,82 @@ int Ntuple_Controller::getBBCCMCEventType(){
 double Ntuple_Controller::getMCEventWeight(){
         if (Ntp->Event_DataMC_Type>180&&Ntp->Event_DataMC_Type<190){
                 
+                
+                
+                // Getting the highest pT
+                
+                float maxMass = -1.0;
+                int heaviestIndex = -1;
+                float partPt = -1;
+                  
+                const std::unordered_set<int> targetPDGs = {511, 521, 513, 523, 531, 533, 541, 5122, 411, 421, 413, 423, 431, 433, 415, 10411};
+                  
+                for (unsigned int imc = 0; imc < NMCParticles(); imc++) {
+                            int pdg = abs(MCParticle_pdgid(imc));
+                        
+                            if ((pdg >= 400 && pdg < 500) || (pdg >= 4000 && pdg < 5000) || (pdg >= 10400 && pdg < 10500) || (pdg >= 500 && pdg < 600) || (pdg >= 5000 && pdg < 6000) || (pdg >= 10500 && pdg < 10600) ) {
+                            //if (targetPDGs.count(pdg)) {
+                                float mass = MCParticle_p4(imc).M();
+                                if (mass > maxMass) {
+                                    maxMass = mass;
+                                    heaviestIndex = imc;
+                                    partPt=MCParticle_p4(imc).Pt();
+                                }
+                            }
+                }
+                
+                //norm = p * (sig1/sig)*(eff1/eff)*(N/N1) = p * 1
                 if(Ntp->Event_DataMC_Type==181){
-                        return 0.00020032999490705638;
+                        if(getBBCCMCEventType()==10){//bbbar
+                                if(partPt>20.0){
+                                        return 0.000577888;
+                                }
+                                else{
+                                        return 0.00016252;
+                                }
+                        }
+                        else{
+                                return 0.00013781;
+                        }
                 }
                 if(Ntp->Event_DataMC_Type==183){
-                        return 3.7593532704596435e-05;
+                        if(getBBCCMCEventType()==10){//bbbar
+                                if(partPt>20.0){
+                                        return 4.09916e-05;
+                                }
+                                else{
+                                        return 2.35024e-05;
+                                }
+                        }
+                        else{
+                                return 5.16835e-05;
+                        }
                 }
                 if(Ntp->Event_DataMC_Type==185){
-                        return 2.9394874716038537e-05;
+                        if(getBBCCMCEventType()==10){//bbbar
+                                if(partPt>20.0){
+                                        return 3.21615e-05;
+                                }
+                                else{
+                                        return 1.94928e-05;
+                                }
+                        }
+                        else{
+                                return 2.94485e-05;
+                        }
                 }
                 if(Ntp->Event_DataMC_Type==189){
-                        return 3.461925327654335e-05;
+                        if(getBBCCMCEventType()==10){//bbbar
+                                if(partPt>20.0){
+                                        return 3.77443e-05;
+                                }
+                                else{
+                                        return 2.29861e-05;
+                                }
+                        }
+                        else{
+                                return 4.07214e-05;
+                        }
                 }
                 return Ntp->genWeight;
                 //return 1.0/25000.0;

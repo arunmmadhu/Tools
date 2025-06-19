@@ -771,6 +771,11 @@ class Ntuple_Controller{
          unsigned int index = i + channel*Ntuple_Controller::NThreeMuons();
          return Ntp->Vertex_signal_KF_BS_significance->at(index); 
       }
+      
+      std::vector<double>     Vertex_signal_KF_BS(unsigned int i, bool channel=false){
+         unsigned int index = i + channel*Ntuple_Controller::NThreeMuons();
+         return Ntp->Vertex_signal_KF_BS->at(index); 
+      }
 
       TVector3   Vertex_signal_AF_pos(unsigned int i, bool channel=false){
          unsigned int index = i + channel*Ntuple_Controller::NThreeMuons();
