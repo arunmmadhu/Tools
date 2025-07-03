@@ -370,6 +370,11 @@ class ZTau3MuTaumu : public Selection {
   Float_t weight;
   Float_t dimu_OS1;
   Float_t dimu_OS2;
+  Float_t Selection_CandidateCut_1;
+  Float_t Selection_CandidateCut_2A;
+  Float_t Selection_CandidateCut_2B;
+  Float_t Selection_CandidateCut_3;
+  Float_t Selection_PairMassVeto;
   
   TMVA::Reader *reader_Taumu;
   TMVA::Reader *reader_Taumu_Without_Vis_Mass;

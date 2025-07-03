@@ -214,6 +214,11 @@ void  ZTau3MuTaumu::Configure(){
   T3MCombineTree->Branch("weight",&weight);
   T3MCombineTree->Branch("dimu_OS1",&dimu_OS1);
   T3MCombineTree->Branch("dimu_OS2",&dimu_OS2);
+  T3MCombineTree->Branch("Selection_CandidateCut_1",&Selection_CandidateCut_1);
+  T3MCombineTree->Branch("Selection_CandidateCut_2A",&Selection_CandidateCut_2A);
+  T3MCombineTree->Branch("Selection_CandidateCut_2B",&Selection_CandidateCut_2B);
+  T3MCombineTree->Branch("Selection_CandidateCut_3",&Selection_CandidateCut_3);
+  T3MCombineTree->Branch("Selection_PairMassVeto",&Selection_PairMassVeto);
   
   
   for(int i=0; i<NCuts;i++){
@@ -310,7 +315,7 @@ void  ZTau3MuTaumu::Configure(){
       Nminus0.push_back(HConfig.GetTH1D(Name+c+"_Nminus0_MoreSignalCandidateCuts_1_",htitle,5,-0.5,4.5,hlabel,"Events"));
     }
     else if(i==MoreSignalCandidateCuts_2){
-      title.at(i)="Additional conditions on $\\tau_{3\\mu}$ candidate (is PF and global $\\mu$)";
+      title.at(i)="Additional conditions on $\\tau_{3\\mu}$ candidate (is PF $\\mu$)";
       htitle=title.at(i);
       hlabel="N $3\\mu$ candidates";
       htitle.ReplaceAll("$","");
@@ -945,7 +950,8 @@ void  ZTau3MuTaumu::doEvent(){
 
   int No_Tau_Candidates(0);
   bool Whether_Condition1(false);
-  bool Whether_Condition2(false);
+  bool Whether_Condition2A(false);
+  bool Whether_Condition2B(false);
   bool Whether_Condition3(false);
   for(int i_idx =0; i_idx < Ntp->NThreeMuons(); i_idx++){
     
@@ -1023,23 +1029,28 @@ void  ZTau3MuTaumu::doEvent(){
     }
     
     
-    bool all_muons_PF_and_GL = true;
+    bool all_muons_PF = true;
+    bool all_muons_GL = true;
     for (int j = 0; j < 3; ++j) {
             int imu = Ntp->SortedPtMuons(Ntp->ThreeMuonIndices(i_idx)).at(j);
-            if (!(Ntp->Muon_isPFMuon(imu) && Ntp->Muon_isGlobalMuon(imu))) {
-                all_muons_PF_and_GL = false;
-                break;
+            if (!(Ntp->Muon_isPFMuon(imu) )) {
+                all_muons_PF = false;
+                
+            }
+            if (!( Ntp->Muon_isGlobalMuon(imu))) {
+                all_muons_GL = false;
             }
     }
     
     if(!WhetherMuonMatchedToResonanceList&&WhetherMupTpass) Whether_Condition1=true;
-    if(all_muons_PF_and_GL) Whether_Condition2=true;
-    if(WhetherTripletMassInRange) Whether_Condition3=true;
+    if(all_muons_PF&&Whether_Condition1) Whether_Condition2A=true;
+    if(all_muons_GL&&Whether_Condition1) Whether_Condition2B=true;
+    if(WhetherTripletMassInRange&&Whether_Condition1&&Whether_Condition2A&&Whether_Condition2B) Whether_Condition3=true;
     
     if(WhetherMuonMatchedToResonanceList) continue;
-    if(!WhetherTripletMassInRange) continue;
     if(!WhetherMupTpass) continue;
-    if(!all_muons_PF_and_GL) continue;
+    if(!(all_muons_PF&&all_muons_GL)) continue;
+    if(!WhetherTripletMassInRange) continue;
     
     No_Tau_Candidates++;
     
@@ -1047,13 +1058,15 @@ void  ZTau3MuTaumu::doEvent(){
             TString name = Ntp->TriggerObject_name(i);
             TLorentzVector tmp;
             tmp.SetPtEtaPhiM(Ntp->TriggerObject_pt(i), Ntp->TriggerObject_eta(i), Ntp->TriggerObject_phi(i), PDG_Var::Tau_mass());
-            if ( (TripletmuLV).DeltaR(tmp) < min_dR_3mu_trig && name.Contains("hltTau3MuIsoFilterCharge1") ) { min_dR_3mu_trig = (TripletmuLV).DeltaR(tmp); signal_idx = i_idx; }
+            if ( (TripletmuLV).DeltaR(tmp) < min_dR_3mu_trig && name.Contains("hltTau3MuIsoFilterCharge1") ) {
+                    min_dR_3mu_trig = (TripletmuLV).DeltaR(tmp); signal_idx = i_idx;
+            }
     }
     
   }
   
   pass.at(MoreSignalCandidateCuts_1) = Whether_Condition1;
-  pass.at(MoreSignalCandidateCuts_2) = Whether_Condition2;
+  pass.at(MoreSignalCandidateCuts_2) = Whether_Condition2A&&Whether_Condition2B;
   pass.at(MoreSignalCandidateCuts_3) = Whether_Condition3;
   
   // Define some stuff here if you want them after if(status)
@@ -1061,7 +1074,7 @@ void  ZTau3MuTaumu::doEvent(){
   TLorentzVector MC_NeutrinoSum_LV(0.,0.,0.,0.);
   int Whether_decay_found(0);
   
-  bool WhetherSignalMC = id==210||id==210231||id==210232||id==210233;
+  bool WhetherSignalMC = (id==210||id==210231||id==210232||id==210233)||(id==251231||id==251232||id==251233)||(id==252231||id==252232||id==252233)||(id==253231||id==253232||id==253233)||(id==254231||id==254232||id==254233)||(id==255231||id==255232||id==255233);
   
   if(WhetherSignalMC){
   
@@ -1618,18 +1631,7 @@ void  ZTau3MuTaumu::doEvent(){
       Eta_muon1_beforecuts.at(t).Fill();
     */
     
-    /*
-    bool WhetherLooseCutsForBDTTraining(true);//Pass more events for BDT Training
     
-    if(WhetherLooseCutsForBDTTraining){
-            pass.at(TripletPT) = 1;
-            //pass.at(nMuons_pT) = 1;
-            pass.at(MuonIsolation) = 1;
-            pass.at(Tau3MuIsolation) = 1;
-            pass.at(VisMass) = 1;
-            //pass.at(nMuons_dR) = 1;
-    }
-    */
 
     
     
@@ -1733,6 +1735,21 @@ void  ZTau3MuTaumu::doEvent(){
   
   if(pass.at(VetoOtherEvents)){
           Selection_TripletMass.at(t).Fill(Tau3MuLV.M(),Ntp->getMCEventWeight() );
+  }
+  
+  
+  bool WhetherLooseCutsForBDTTraining(false);//Pass more events for BDT Training
+  Float_t val_Selection_CandidateCut_1=Whether_Condition1;
+  Float_t val_Selection_CandidateCut_2A=Whether_Condition2A;
+  Float_t val_Selection_CandidateCut_2B=Whether_Condition2B;
+  Float_t val_Selection_CandidateCut_3=Whether_Condition3;
+  Float_t val_Selection_PairMassVeto=pass.at(PairMassVeto);
+  
+  if(WhetherLooseCutsForBDTTraining){
+          pass.at(MoreSignalCandidateCuts_1) = true;
+          pass.at(MoreSignalCandidateCuts_2) = true;
+          pass.at(MoreSignalCandidateCuts_3) = true;
+          pass.at(PairMassVeto) = true;
   }
   
     
@@ -2407,6 +2424,13 @@ void  ZTau3MuTaumu::doEvent(){
         if(isMC==0) weight=1.0;
         dimu_OS1=m12;
         dimu_OS2=m13;
+        
+        Selection_CandidateCut_1=val_Selection_CandidateCut_1;
+        Selection_CandidateCut_2A=val_Selection_CandidateCut_2A;
+        Selection_CandidateCut_2B=val_Selection_CandidateCut_2B;
+        Selection_CandidateCut_3=val_Selection_CandidateCut_3;
+        Selection_PairMassVeto=val_Selection_PairMassVeto;
+        
         T3MCombineTree->Fill();
         
         //}
