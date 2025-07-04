@@ -883,11 +883,12 @@ void  ZTauTau::doEvent(){
     if(!WhetherMuonMatchedToResonanceList&&WhetherMupTpass) Whether_Condition1=true;
     if(all_muons_PF&&Whether_Condition1) Whether_Condition2A=true;
     if(all_muons_GL&&Whether_Condition1) Whether_Condition2B=true;
-    if(WhetherTripletMassInRange&&Whether_Condition1&&Whether_Condition2A&&Whether_Condition2B) Whether_Condition3=true;
+    if(WhetherTripletMassInRange&&Whether_Condition1&&Whether_Condition2A) Whether_Condition3=true;
     
+    //would need to be commented out for BDT training
     if(WhetherMuonMatchedToResonanceList) continue;
     if(!WhetherMupTpass) continue;
-    if(!(all_muons_PF&&all_muons_GL)) continue;
+    if(!(all_muons_PF)) continue;
     if(!WhetherTripletMassInRange) continue;
     
     No_Tau_Candidates++;
@@ -904,7 +905,7 @@ void  ZTauTau::doEvent(){
   }
   
   pass.at(MoreSignalCandidateCuts_1) = Whether_Condition1;
-  pass.at(MoreSignalCandidateCuts_2) = Whether_Condition2A&&Whether_Condition2B;
+  pass.at(MoreSignalCandidateCuts_2) = Whether_Condition2A;
   pass.at(MoreSignalCandidateCuts_3) = Whether_Condition3;
   
   
