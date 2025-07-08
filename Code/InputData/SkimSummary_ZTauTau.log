@@ -4,8 +4,8 @@ ID= 210232 AllEvt= 493661.0000  AllEvtErr= 702.6101  SelEvt= 0.000000  SelEvtErr
 ID= 210231 AllEvt= 485727.0000  AllEvtErr= 696.9411  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 485727.0000 SelEvtnoweight= 0.000000 Nfile= 16
 ID= 550    AllEvt= 105698900.000000 AllEvtErr= 10280.9970  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 105698900.000000 SelEvtnoweight= 0.000000 Nfile= 16
 ID= 560    AllEvt= 21997587.000000 AllEvtErr= 4690.1585  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 21997587.000000 SelEvtnoweight= 0.000000 Nfile= 16
-ID= 700    AllEvt= 239782695.000000 AllEvtErr= 15484.9183  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 239782695.000000 SelEvtnoweight= 0.000000 Nfile= 16
-ID= 183    AllEvt= 682214.000000 AllEvtErr= 825.96246  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 682214.000000 SelEvtnoweight= 0.000000 Nfile= 16
-ID= 185    AllEvt= 488486.000000 AllEvtErr= 698.91773  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 488486.000000 SelEvtnoweight= 0.000000 Nfile= 16
-ID= 189    AllEvt= 313302.000000 AllEvtErr= 559.73386  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 313302.000000 SelEvtnoweight= 0.000000 Nfile= 16
-ID= 181    AllEvt= 503889.000000 AllEvtErr= 709.85139  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 503889.000000 SelEvtnoweight= 0.000000 Nfile= 16
+ID= 700    AllEvt= 239975000.000000 AllEvtErr= 15491.1264  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 239975000.000000 SelEvtnoweight= 0.000000 Nfile= 16
+ID= 183    AllEvt= 796155.000000 AllEvtErr= 892.2751  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 796155.000000 SelEvtnoweight= 0.000000 Nfile= 16
+ID= 185    AllEvt= 491159.000000 AllEvtErr= 700.8273  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 491159.000000 SelEvtnoweight= 0.000000 Nfile= 16
+ID= 189    AllEvt= 985721.000000 AllEvtErr= 992.8348  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 985721.000000 SelEvtnoweight= 0.000000 Nfile= 16
+ID= 181    AllEvt= 952281.000000 AllEvtErr= 975.8488  SelEvt= 0.000000  SelEvtErr= 0.000000 AllEvtnoweight= 952281.000000 SelEvtnoweight= 0.000000 Nfile= 16
