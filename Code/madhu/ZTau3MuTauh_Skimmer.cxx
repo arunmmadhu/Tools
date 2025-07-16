@@ -612,7 +612,7 @@ void  ZTau3MuTauh_Skimmer::doEvent(){
   
   //value.at(WhetherZTTDecayFound)=var_Whether_decay_found&&var_Mu1_Candidate_p&&var_Mu1_Candidate_eta&&var_Mu2_Candidate_p&&var_Mu2_Candidate_eta&&var_Mu3_Candidate_p&&var_Mu3_Candidate_eta&&var_Tau_h_Candidate_p&&var_Tau_h_Candidate_eta&&var_Mu1_Candidate_recod&&var_Mu2_Candidate_recod&&var_Mu3_Candidate_recod&&var_Tau_h_Candidate_recod;
   value.at(WhetherZTTDecayFound)=var_Whether_decay_found;
-  pass.at(WhetherZTTDecayFound)=(value.at(WhetherZTTDecayFound)==cut.at(WhetherZTTDecayFound));
+  pass.at(WhetherZTTDecayFound)=true;
   
   // This is to print out selected event content
   if(id==210233){
@@ -874,7 +874,7 @@ void  ZTau3MuTauh_Skimmer::doEvent(){
   }
   */
              
-  if(!Ntp->isData()){w = 1; /*Ntp->PUReweight(); */} //  No weights to data
+  if(!Ntp->isData()){w = Ntp->getMCEventWeight(); /*Ntp->PUReweight(); */} //  No weights to data
   else{w=1;}
   
   bool presel_cuts_tau;
