@@ -45,6 +45,8 @@ void trigger_eff_main ()
     TH2D * tauh_Whether_Mu2_fiducial_and_reco  = (TH2D*)TreeFile_h->Get("ztau3mutauh_prefc_default_Whether_Mu2_fiducial_and_recoMC4");
     TH2D * tauh_Whether_Mu3_fiducial_and_reco  = (TH2D*)TreeFile_h->Get("ztau3mutauh_prefc_default_Whether_Mu3_fiducial_and_recoMC4");
     TH2D * tauh_Whether_Tau_h_fiducial_and_reco  = (TH2D*)TreeFile_h->Get("ztau3mutauh_prefc_default_Whether_Tau_h_fiducial_and_recoMC4");
+    TH2D * tauh_Whether_Tau_h_triplet_triggered  = (TH2D*)TreeFile_h->Get("ztau3mutauh_prefc_default_Whether_triplet_triggeredMC4");
+    TH2D * tauh_Whether_Tau_h_4object_triggered  = (TH2D*)TreeFile_h->Get("ztau3mutauh_prefc_default_Whether_4object_triggeredMC4");
     
     TH1D * taumu_Whether_4object_reconstructed  = (TH1D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_4object_reconstructedMC3");
     TH2D * taumu_Whether_4object_fiducial_reco  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_4object_fiducial_and_reconstructedMC3");
@@ -54,6 +56,8 @@ void trigger_eff_main ()
     TH2D * taumu_Whether_Mu2_fiducial_and_reco  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_Mu2_fiducial_and_recoMC3");
     TH2D * taumu_Whether_Mu3_fiducial_and_reco  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_Mu3_fiducial_and_recoMC3");
     TH2D * taumu_Whether_Tau_mu_fiducial_and_reco  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_Tau_mu_fiducial_and_recoMC3");
+    TH2D * taumu_Whether_Tau_mu_triplet_triggered  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_triplet_triggeredMC3");
+    TH2D * taumu_Whether_Tau_mu_4object_triggered  = (TH2D*)TreeFile_mu->Get("ztau3mutaumu_prefc_default_Whether_4object_triggeredMC3");
     
     TH1D * taue_Whether_4object_reconstructed  = (TH1D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_4object_reconstructedMC2");
     TH2D * taue_Whether_4object_fiducial_reco  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_4object_fiducial_and_reconstructedMC2");
@@ -63,6 +67,8 @@ void trigger_eff_main ()
     TH2D * taue_Whether_Mu2_fiducial_and_reco  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_Mu2_fiducial_and_recoMC2");
     TH2D * taue_Whether_Mu3_fiducial_and_reco  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_Mu3_fiducial_and_recoMC2");
     TH2D * taue_Whether_Tau_e_fiducial_and_reco  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_Tau_e_fiducial_and_recoMC2");
+    TH2D * taue_Whether_Tau_e_triplet_triggered  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_triplet_triggeredMC2");
+    TH2D * taue_Whether_Tau_e_4object_triggered  = (TH2D*)TreeFile_e->Get("ztau3mutaue_prefc_default_Whether_4object_triggeredMC2");
     
     
     //For tau h
@@ -106,6 +112,9 @@ void trigger_eff_main ()
     std::cout << "Percent of reco triplets Triggering L1T: " << (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,2)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
     << " of these, percent triggering HLT: " << (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
     << " Trigger Eff (wrt reco): " << (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,2)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+tauh_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
+    << std::endl;
+    
+    std::cout << " Multiplicative triplet triggered (fid * reco * trig): " << (tauh_Whether_Tau_h_triplet_triggered->GetBinContent(2,2))   /    (tauh_Whether_Tau_h_triplet_triggered->GetBinContent(1,1)+tauh_Whether_Tau_h_triplet_triggered->GetBinContent(1,2)+tauh_Whether_Tau_h_triplet_triggered->GetBinContent(2,1)+tauh_Whether_Tau_h_triplet_triggered->GetBinContent(2,2)) << " Multiplicative 4 obj with tauh triggered (fid * reco * trig): " << (tauh_Whether_Tau_h_4object_triggered->GetBinContent(2,2))   /    (tauh_Whether_Tau_h_4object_triggered->GetBinContent(1,1)+tauh_Whether_Tau_h_4object_triggered->GetBinContent(1,2)+tauh_Whether_Tau_h_4object_triggered->GetBinContent(2,1)+tauh_Whether_Tau_h_4object_triggered->GetBinContent(2,2)) 
     << std::endl;
     
     std::cout << "--- --- --- ---"<< std::endl; 
@@ -167,6 +176,9 @@ void trigger_eff_main ()
     << " Trigger Eff (wrt reco): " << (taumu_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (taumu_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,1)+taumu_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,2)+taumu_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+taumu_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
     << std::endl;
     
+    std::cout << " Multiplicative triplet triggered (fid * reco * trig): " << (taumu_Whether_Tau_mu_triplet_triggered->GetBinContent(2,2))   /    (taumu_Whether_Tau_mu_triplet_triggered->GetBinContent(1,1)+taumu_Whether_Tau_mu_triplet_triggered->GetBinContent(1,2)+taumu_Whether_Tau_mu_triplet_triggered->GetBinContent(2,1)+taumu_Whether_Tau_mu_triplet_triggered->GetBinContent(2,2)) << " Multiplicative 4 obj with taumu triggered (fid * reco * trig): " << (taumu_Whether_Tau_mu_4object_triggered->GetBinContent(2,2))   /    (taumu_Whether_Tau_mu_4object_triggered->GetBinContent(1,1)+taumu_Whether_Tau_mu_4object_triggered->GetBinContent(1,2)+taumu_Whether_Tau_mu_4object_triggered->GetBinContent(2,1)+taumu_Whether_Tau_mu_4object_triggered->GetBinContent(2,2)) 
+    << std::endl;
+    
     std::cout << "--- --- --- ---"<< std::endl; 
     std::cout << "--- --- --- ---"<< std::endl;
     std::cout << "--- --- --- ---"<< std::endl;
@@ -219,6 +231,10 @@ void trigger_eff_main ()
     std::cout << "Percent of reco triplets Triggering L1T: " << (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,2)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
     << " of these, percent triggering HLT: " << (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
     << " Trigger Eff (wrt reco): " << (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))   /    (taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(1,2)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,1)+taue_Whether_reco_triplet_trigger_L1_and_HLT->GetBinContent(2,2))
+    << std::endl;
+    
+    
+    std::cout << " Multiplicative triplet triggered (fid * reco * trig): " << (taue_Whether_Tau_e_triplet_triggered->GetBinContent(2,2))   /    (taue_Whether_Tau_e_triplet_triggered->GetBinContent(1,1)+taue_Whether_Tau_e_triplet_triggered->GetBinContent(1,2)+taue_Whether_Tau_e_triplet_triggered->GetBinContent(2,1)+taue_Whether_Tau_e_triplet_triggered->GetBinContent(2,2)) << " Multiplicative 4 obj with taue triggered (fid * reco * trig): " << (taue_Whether_Tau_e_4object_triggered->GetBinContent(2,2))   /    (taue_Whether_Tau_e_4object_triggered->GetBinContent(1,1)+taue_Whether_Tau_e_4object_triggered->GetBinContent(1,2)+taue_Whether_Tau_e_4object_triggered->GetBinContent(2,1)+taue_Whether_Tau_e_4object_triggered->GetBinContent(2,2)) 
     << std::endl;
     
     

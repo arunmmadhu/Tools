@@ -97,8 +97,10 @@ class ZTau3MuTaumu_PreFC : public Selection {
   std::vector<TH1D>   Z_Pt;
   std::vector<TH2D>   OS_vs_3mu_trigger;
   
+  std::vector<TH2D>   Whether_4object_triggered;
   std::vector<TH1D>   Whether_4object_reconstructed;
   std::vector<TH2D>   Whether_4object_fiducial_and_reconstructed;
+  std::vector<TH2D>   Whether_triplet_triggered;
   std::vector<TH2D>   Whether_triplet_fiducial_or_reco;
   std::vector<TH2D>   Whether_reco_triplet_trigger_L1_and_HLT;
   std::vector<TH2D>   Whether_Mu1_fiducial_and_reco;
@@ -123,6 +125,7 @@ class ZTau3MuTaumu_PreFC : public Selection {
   std::vector<TH2D>   Selection_Cut_Mu1_p_eta_after_reco;
   std::vector<TH2D>   Selection_Cut_Mu1_p_eta_after_noreco;
   std::vector<TH2D>   Selection_Cut_Mu1_p_eta_after_trigger;
+  std::vector<TH2D>   Selection_Cut_Mu1_p_eta_after_notrigger;
   std::vector<TH1D>   Selection_Cut_Mu2_P;
   std::vector<TH1D>   Selection_Cut_Mu2_Eta;
   std::vector<TH1D>   Selection_Cut_Mu2_dR;
@@ -132,6 +135,7 @@ class ZTau3MuTaumu_PreFC : public Selection {
   std::vector<TH2D>   Selection_Cut_Mu2_p_eta_after_reco;
   std::vector<TH2D>   Selection_Cut_Mu2_p_eta_after_noreco;
   std::vector<TH2D>   Selection_Cut_Mu2_p_eta_after_trigger;
+  std::vector<TH2D>   Selection_Cut_Mu2_p_eta_after_notrigger;
   std::vector<TH1D>   Selection_Cut_Mu3_P;
   std::vector<TH1D>   Selection_Cut_Mu3_Eta;
   std::vector<TH1D>   Selection_Cut_Mu3_dR;
@@ -141,6 +145,7 @@ class ZTau3MuTaumu_PreFC : public Selection {
   std::vector<TH2D>   Selection_Cut_Mu3_p_eta_after_reco;
   std::vector<TH2D>   Selection_Cut_Mu3_p_eta_after_noreco;
   std::vector<TH2D>   Selection_Cut_Mu3_p_eta_after_trigger;
+  std::vector<TH2D>   Selection_Cut_Mu3_p_eta_after_notrigger;
   std::vector<TH1D>   Selection_Cut_mu_P;
   std::vector<TH1D>   Selection_Cut_mu_Eta;
   std::vector<TH1D>   Selection_Cut_mu_dR;
@@ -150,6 +155,7 @@ class ZTau3MuTaumu_PreFC : public Selection {
   std::vector<TH2D>   Selection_Cut_mu_p_eta_after_reco;
   std::vector<TH2D>   Selection_Cut_mu_p_eta_after_noreco;
   std::vector<TH2D>   Selection_Cut_mu_p_eta_after_trigger;
+  std::vector<TH2D>   Selection_Cut_mu_p_eta_after_notrigger;
   
   std::vector<TH1D>   Selection_Cut_RecoMu_P;
   std::vector<TH1D>   Selection_Cut_RecoMu_Eta;
