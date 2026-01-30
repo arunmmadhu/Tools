@@ -37,6 +37,7 @@ class ZTauTau : public Selection {
 	     MoreSignalCandidateCuts_1,
              MoreSignalCandidateCuts_2,
              MoreSignalCandidateCuts_3,
+             MoreSignalCandidateCuts_4,
 	     HLT_reinforcements,
 	     TriggerMatch,
 	     PairMassVeto,
@@ -161,6 +162,10 @@ class ZTauTau : public Selection {
   
   std::vector<TH1D>   PostSelection_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostSelection_PairMass_OppositeSign_dR13;
+  
+  std::vector<TH1D>   PostSelection_3mu_uncert_parallel;
+  std::vector<TH1D>   PostSelection_3mu_uncert_perp;
+  std::vector<TH1D>   PostSelection_Phi_Triplet_to_MET;
   
   std::vector<TH1D>   PostSelection_JetBTagCVSB_1;
   std::vector<TH1D>   PostSelection_JetBTagMVA_1;
@@ -306,6 +311,11 @@ class ZTauTau : public Selection {
   
   Float_t var_VisMass;
   Float_t var_DiTauMass_Collinear;
+  Float_t var_3mu_Sigma_Parallel;
+  Float_t var_3mu_Sigma_Perp;
+  Float_t var_Phi_Triplet_To_MET;
+  Float_t var_Phi_Tag_To_MET;
+  Float_t var_Phi_Triplet_To_Tag;
   
   Float_t BDT_Evaluated;
   

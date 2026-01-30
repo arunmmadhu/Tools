@@ -42,6 +42,7 @@ class ZTau3MuTauh : public Selection {
 	     MoreSignalCandidateCuts_1,
              MoreSignalCandidateCuts_2,
              MoreSignalCandidateCuts_3,
+             MoreSignalCandidateCuts_4,
 	     HLT_reinforcements,
 	     TriggerMatch,
              nTaus_pT_eta,
@@ -144,6 +145,7 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoH_Eta;
   
   std::vector<TH1D>   Selection_TripletMass;
+  std::vector<TH1D>   Selection_TripletMass_Full_Mass_range;
   
   std::vector<TH1D>   Selection_bbbar_precut;
   std::vector<TH1D>   Selection_bbbar_HLT;
@@ -158,6 +160,9 @@ class ZTau3MuTauh : public Selection {
   //After Selection
   
   //Cat A
+  std::vector<TH1D>   PostSelection_A_No_of_candidates_Triplet;
+  std::vector<TH1D>   PostSelection_A_No_of_candidates_OS_side;
+  
   std::vector<TH1D>   PostSelection_A_NumberOfTaus;
   std::vector<TH1D>   PostSelection_A_Tau3MuRelativeIsolation;
   std::vector<TH1D>   PostSelection_A_TauHDecayMode;
@@ -211,9 +216,16 @@ class ZTau3MuTauh : public Selection {
   std::vector<TH1D>   PostSelection_A_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostSelection_A_PairMass_OppositeSign_dR13;
   
+  std::vector<TH1D>   PostSelection_A_3mu_uncert_parallel;
+  std::vector<TH1D>   PostSelection_A_3mu_uncert_perp;
+  std::vector<TH1D>   PostSelection_A_Phi_Triplet_to_MET;
+  
   std::vector<TH1D>   PostSelection_A_EventClassifier;
   
   //Cat B
+  std::vector<TH1D>   PostSelection_B_No_of_candidates_Triplet;
+  std::vector<TH1D>   PostSelection_B_No_of_candidates_OS_side;
+  
   std::vector<TH1D>   PostSelection_B_NumberOfTaus;
   std::vector<TH1D>   PostSelection_B_Tau3MuRelativeIsolation;
   std::vector<TH1D>   PostSelection_B_TauHDecayMode;
@@ -266,6 +278,10 @@ class ZTau3MuTauh : public Selection {
   
   std::vector<TH1D>   PostSelection_B_PairMass_OppositeSign_dR12;
   std::vector<TH1D>   PostSelection_B_PairMass_OppositeSign_dR13;
+  
+  std::vector<TH1D>   PostSelection_B_3mu_uncert_parallel;
+  std::vector<TH1D>   PostSelection_B_3mu_uncert_perp;
+  std::vector<TH1D>   PostSelection_B_Phi_Triplet_to_MET;
 
 
   
@@ -499,6 +515,11 @@ class ZTau3MuTauh : public Selection {
   
   Float_t var_VisMass;
   Float_t var_DiTauMass_Collinear;
+  Float_t var_3mu_Sigma_Parallel;
+  Float_t var_3mu_Sigma_Perp;
+  Float_t var_Phi_Triplet_To_MET;
+  Float_t var_Phi_Tag_To_MET;
+  Float_t var_Phi_Triplet_To_Tag;
   
   Float_t var_Whether_HPS_Tau_Vtx_Exists;
   Float_t var_HPS_FL_Sig;
@@ -512,6 +533,7 @@ class ZTau3MuTauh : public Selection {
   
   //For combine
   Float_t tripletMass;
+  Float_t tripletMassNonRefit;
   Float_t bdt_cv;
   Float_t category;
   Float_t isMC;

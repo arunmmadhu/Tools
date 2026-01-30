@@ -41,6 +41,7 @@ class ZTau3MuTaumu : public Selection {
 	     MoreSignalCandidateCuts_1,
              MoreSignalCandidateCuts_2,
              MoreSignalCandidateCuts_3,
+             MoreSignalCandidateCuts_4,
 	     HLT_reinforcements,
 	     TriggerMatch,
 	     nMuons_PF_GL_pT_eta,
@@ -121,6 +122,7 @@ class ZTau3MuTaumu : public Selection {
   std::vector<TH1D>   Selection_Cut_RecoMu_Eta;
   
   std::vector<TH1D>   Selection_TripletMass;
+  std::vector<TH1D>   Selection_TripletMass_Full_Mass_range;
   
   std::vector<TH1D>   Selection_bbbar_precut;
   std::vector<TH1D>   Selection_bbbar_HLT;
@@ -133,6 +135,9 @@ class ZTau3MuTaumu : public Selection {
   std::vector<TH1D>   Selection_ccbar_after_presel;
   
   //After Selection
+  
+  std::vector<TH1D>   PostSelection_No_of_candidates_Triplet;
+  std::vector<TH1D>   PostSelection_No_of_candidates_OS_side;
   
   std::vector<TH1D>   PostSelection_Tau3MuRelativeIsolation;
   std::vector<TH1D>   PostSelection_OppositeMuRelativeIsolation;
@@ -196,6 +201,43 @@ class ZTau3MuTaumu : public Selection {
   
   std::vector<TH1D>   PostSelection_3Mu_MinDistToMuTrack_mm;
   std::vector<TH1D>   PostSelection_AvgDeltaZ_3Mu_Mu_mm;
+  
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_highPtTagMu;
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_highPtTagMu_high_BDT;
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_highPtTagMu_higher_BDT;
+  
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_Regular;
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_Regular_high_BDT;
+  std::vector<TH1D>   PostSelection_VisibleDiTauMass_Regular_higher_BDT;
+  
+  std::vector<TH1D>   PostSelection_TagMu_ImpactParameter_ToTriplet_dxy;
+  std::vector<TH1D>   PostSelection_TagMu_ImpactParameter_ToTriplet_dxy_significance;
+  std::vector<TH1D>   PostSelection_TagMu_ImpactParameter_ToTriplet_dxy_significance_smallScale;
+  
+  std::vector<TH1D>   PostSelection_TagMu_ImpactParameter_ToTriplet_dz;
+  
+  
+  std::vector<TH1D>   PostSelection_BSSV_2DSignificance;
+  
+  std::vector<TH1D>   PostSelection_TripletMu_Highest_ImpactParameter_ToTriplet_dxy;
+  std::vector<TH1D>   PostSelection_TripletMu_Highest_ImpactParameter_ToTriplet_dxy_significance;
+  
+  std::vector<TH1D>   PostSelection_PV_max_sigma;
+  
+  std::vector<TH1D>   PostSelection_TripletMu_Highest_ImpactParameter_ToTriplet_dz;
+  
+  std::vector<TH1D>   PostSelection_4mu_3mu_uncert_ratio_parallel_to_perp;
+  std::vector<TH1D>   PostSelection_4mu_3mu_uncert_ratio_parallel_to_perp_smallScale;
+  std::vector<TH1D>   PostSelection_4mu_3mu_uncert_ratio_parallel_to_chi2;
+  std::vector<TH1D>   PostSelection_4mu_3mu_uncert_ratio_parallel_to_chi2_smallScale;
+  
+  std::vector<TH1D>   PostSelection_3mu_uncert_parallel;
+  std::vector<TH1D>   PostSelection_3mu_uncert_perp;
+  std::vector<TH1D>   PostSelection_Phi_Triplet_to_MET;
+  
+  std::vector<TH1D>   PostSelection_Mu_Pair_dz_new;
+  std::vector<TH1D>   PostSelection_Mu_Pair_dz_old;
+  std::vector<TH1D>   PostSelection_AvgDeltaZ_3Mu_Mu_mm_new;
   
   //After BDT
   
@@ -353,6 +395,12 @@ class ZTau3MuTaumu : public Selection {
   
   Float_t var_VisMass;
   Float_t var_DiTauMass_Collinear;
+  Float_t var_3mu_Sigma_Parallel;
+  Float_t var_3mu_Sigma_Perp;
+  Float_t var_Phi_Triplet_To_MET;
+  Float_t var_Phi_Tag_To_MET;
+  Float_t var_Phi_Triplet_To_Tag;
+  
   Float_t var_4Mu_Chi2;
   Float_t var_4Mu_Vertex_Disp;
   Float_t var_3Mu_MinDistToMuTrack_mm;
@@ -364,6 +412,7 @@ class ZTau3MuTaumu : public Selection {
   
   //For combine
   Float_t tripletMass;
+  Float_t tripletMassNonRefit;
   Float_t bdt_cv;
   Float_t category;
   Float_t isMC;
